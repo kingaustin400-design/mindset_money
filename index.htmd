@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mindset: practical business ideas, money tips and ways to build your future.">
+  <title>Mindset | Business & Money</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; font-family: Arial, sans-serif;
+      background: #101114; color: #f8f8f8; line-height: 1.6;
+    }
+    header {
+      padding: 18px 7%; display: flex; flex-wrap: wrap;
+      justify-content: space-between; align-items: center;
+      border-bottom: 1px solid #333;
+    }
+    .logo { font-size: 23px; font-weight: 800; color: #ffca28; }
+    nav a { color: white; margin: 0 7px; text-decoration: none; }
+    .hero { padding: 85px 7%; text-align: center;
+      background: linear-gradient(135deg,#191919,#29230f); }
+    .hero h1 { font-size: clamp(36px,7vw,62px); line-height: 1.1; }
+    .gold { color: #ffca28; }
+    .hero p { max-width: 600px; margin: 20px auto; color: #ddd; }
+    .btn { display: inline-block; background: #ffca28; color: #151515;
+      padding: 12px 22px; border-radius: 7px; font-weight: bold;
+      text-decoration: none; margin: 6px; }
+    section { padding: 55px 7%; }
+    h2 { font-size: 30px; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 18px; }
+    .card { background: #1c1d21; border: 1px solid #363636;
+      border-radius: 12px; padding: 22px; }
+    .card h3 { color: #ffca28; }
+    .about { background: #191a1e; }
+    footer { text-align: center; padding: 25px; color: #bbb; border-top: 1px solid #333; }
+    a:focus { outline: 2px solid #ffca28; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">🤑 MINDSET</div>
+    <nav>
+      <a href="#ideas">Ideas</a>
+      <a href="#tips">Money Tips</a>
+      <a href="#about">About</a>
+    </nav>
+  </header>
+  <main>
+    <section class="hero">
+      <p class="gold">THINK SMART. START SMALL. GROW BIG.</p>
+      <h1>Build Your <span class="gold">Money Mindset.</span></h1>
+      <p>Discover beginner-friendly business ideas, practical money tips, and simple steps to start building your future.</p>
+      <a class="btn" href="#ideas">Explore Business Ideas</a>
+      <a class="btn" href="#tips">Learn Money Tips</a>
+    </section>
+    <section id="ideas">
+      <h2>Business Ideas to Get You Started</h2>
+      <p>You don't need to start big. Start with what you have and learn as you go.</p>
+      <div class="cards">
+        <article class="card"><h3>🛍️ Buy and Resell</h3><p>Find affordable products people need, compare prices, and sell honestly for a reasonable profit.</p></article>
+        <article class="card"><h3>💻 Digital Services</h3><p>Learn skills like graphic design, video editing, or social media management and offer them to clients.</p></article>
+        <article class="card"><h3>🥤 Food and Drinks</h3><p>Explore selling snacks or refreshments where local rules permit. Track costs before setting prices.</p></article>
+        <article class="card"><h3>🧹 Local Services</h3><p>Try car washing, gardening, or cleaning. Start with a simple service and build trust with customers.</p></article>
+      </div>
+    </section>
+    <section class="about" id="tips">
+      <h2>Simple Money Tips</h2>
+      <div class="cards">
+        <article class="card"><h3>📊 Track Your Spending</h3><p>Write down what comes in and what goes out so you can make informed choices.</p></article>
+        <article class="card"><h3>🎯 Set a Savings Goal</h3><p>Choose a realistic goal and save consistently, even if you can only start with a little.</p></article>
+        <article class="card"><h3>📚 Invest in Learning</h3><p>Build useful skills over time. Be careful with promises of quick or guaranteed profits.</p></article>
+      </div>
+    </section>
+    <section id="about">
+      <h2>Welcome to 🤑 Mindset</h2>
+      <p>Our mission is to make business and money topics easier to understand, especially for beginners. Learn, take action, and improve one step at a time.</p>
+      <a class="btn" href="https://www.youtube.com/">Explore YouTube</a>
+    </section>
+  </main>
+  <footer>© 2026 🤑 Mindset · Learn wisely. Build patiently.</footer>
+</body>
+</html>
