@@ -1,83 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Mindset: practical business ideas, money tips and ways to build your future.">
-  <title>Mindset | Business & Money</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0; font-family: Arial, sans-serif;
-      background: #101114; color: #f8f8f8; line-height: 1.6;
-    }
-    header {
-      padding: 18px 7%; display: flex; flex-wrap: wrap;
-      justify-content: space-between; align-items: center;
-      border-bottom: 1px solid #333;
-    }
-    .logo { font-size: 23px; font-weight: 800; color: #ffca28; }
-    nav a { color: white; margin: 0 7px; text-decoration: none; }
-    .hero { padding: 85px 7%; text-align: center;
-      background: linear-gradient(135deg,#191919,#29230f); }
-    .hero h1 { font-size: clamp(36px,7vw,62px); line-height: 1.1; }
-    .gold { color: #ffca28; }
-    .hero p { max-width: 600px; margin: 20px auto; color: #ddd; }
-    .btn { display: inline-block; background: #ffca28; color: #151515;
-      padding: 12px 22px; border-radius: 7px; font-weight: bold;
-      text-decoration: none; margin: 6px; }
-    section { padding: 55px 7%; }
-    h2 { font-size: 30px; }
-    .cards { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 18px; }
-    .card { background: #1c1d21; border: 1px solid #363636;
-      border-radius: 12px; padding: 22px; }
-    .card h3 { color: #ffca28; }
-    .about { background: #191a1e; }
-    footer { text-align: center; padding: 25px; color: #bbb; border-top: 1px solid #333; }
-    a:focus { outline: 2px solid #ffca28; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Mindset helps beginners explore business ideas, smarter money habits and ways to grow their skills.">
+<title>Mindset — Think Bigger. Start Today.</title>
+<style>
+:root{--gold:#f5c542;--bg:#0c0d10;--panel:#17191e;--muted:#b6bac5;--white:#fff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--white);font-family:Arial,Helvetica,sans-serif;line-height:1.65}
+a{color:inherit}
+header{padding:18px 6%;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;border-bottom:1px solid #292b31}
+.logo{font-weight:900;font-size:23px;color:var(--gold);letter-spacing:.5px}
+nav{display:flex;gap:17px;flex-wrap:wrap}
+nav a{text-decoration:none;font-size:14px;color:#eee}
+nav a:hover{color:var(--gold)}
+.hero{padding:78px 7%;background:radial-gradient(ellipse at top right,#423516 0%,#1b1913 32%,#0c0d10 74%);text-align:center}
+.eyebrow{color:var(--gold);font-size:12px;font-weight:bold;letter-spacing:2px;text-transform:uppercase}
+h1{font-size:clamp(38px,8vw,68px);line-height:1.08;letter-spacing:-1.8px;margin:18px auto;max-width:850px}
+.gold{color:var(--gold)}
+.hero p{max-width:630px;color:#d0d0d4;margin:18px auto 26px}
+.btn{display:inline-block;padding:12px 19px;border-radius:7px;text-decoration:none;font-weight:bold;margin:5px;background:var(--gold);color:#141414}
+.btn.secondary{background:transparent;color:white;border:1px solid #666}
+section{padding:55px 7%}
+.section-top{margin-bottom:24px}
+.section-top p,.muted{color:var(--muted)}
+h2{font-size:clamp(27px,5vw,38px);line-height:1.2;margin:0 0 10px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:17px}
+.card{background:var(--panel);border:1px solid #30323a;padding:23px;border-radius:13px}
+.card .symbol{font-size:29px}
+.card h3{margin:9px 0;color:var(--gold);font-size:19px}
+.card p{color:#c6c8cf;margin-bottom:0}
+.feature{background:#141519}
+.steps{padding-left:20px;color:#d6d7dd}
+.steps li{padding:5px 0}
+.callout{border:1px solid #655222;border-radius:14px;padding:27px;background:linear-gradient(120deg,#211d12,#15161a)}
+footer{padding:30px 7%;border-top:1px solid #30323a;color:var(--muted);text-align:center;font-size:13px}
+footer a{color:var(--gold)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+@media(max-width:480px){header{padding:15px 5%}nav{gap:12px}.hero{padding:62px 6%}section{padding:43px 6%}}
+</style>
 </head>
 <body>
-  <header>
-    <div class="logo">🤑 MINDSET</div>
-    <nav>
-      <a href="#ideas">Ideas</a>
-      <a href="#tips">Money Tips</a>
-      <a href="#about">About</a>
-    </nav>
-  </header>
-  <main>
-    <section class="hero">
-      <p class="gold">THINK SMART. START SMALL. GROW BIG.</p>
-      <h1>Build Your <span class="gold">Money Mindset.</span></h1>
-      <p>Discover beginner-friendly business ideas, practical money tips, and simple steps to start building your future.</p>
-      <a class="btn" href="#ideas">Explore Business Ideas</a>
-      <a class="btn" href="#tips">Learn Money Tips</a>
-    </section>
-    <section id="ideas">
-      <h2>Business Ideas to Get You Started</h2>
-      <p>You don't need to start big. Start with what you have and learn as you go.</p>
-      <div class="cards">
-        <article class="card"><h3>🛍️ Buy and Resell</h3><p>Find affordable products people need, compare prices, and sell honestly for a reasonable profit.</p></article>
-        <article class="card"><h3>💻 Digital Services</h3><p>Learn skills like graphic design, video editing, or social media management and offer them to clients.</p></article>
-        <article class="card"><h3>🥤 Food and Drinks</h3><p>Explore selling snacks or refreshments where local rules permit. Track costs before setting prices.</p></article>
-        <article class="card"><h3>🧹 Local Services</h3><p>Try car washing, gardening, or cleaning. Start with a simple service and build trust with customers.</p></article>
-      </div>
-    </section>
-    <section class="about" id="tips">
-      <h2>Simple Money Tips</h2>
-      <div class="cards">
-        <article class="card"><h3>📊 Track Your Spending</h3><p>Write down what comes in and what goes out so you can make informed choices.</p></article>
-        <article class="card"><h3>🎯 Set a Savings Goal</h3><p>Choose a realistic goal and save consistently, even if you can only start with a little.</p></article>
-        <article class="card"><h3>📚 Invest in Learning</h3><p>Build useful skills over time. Be careful with promises of quick or guaranteed profits.</p></article>
-      </div>
-    </section>
-    <section id="about">
-      <h2>Welcome to 🤑 Mindset</h2>
-      <p>Our mission is to make business and money topics easier to understand, especially for beginners. Learn, take action, and improve one step at a time.</p>
-      <a class="btn" href="https://www.youtube.com/">Explore YouTube</a>
-    </section>
-  </main>
-  <footer>© 2026 🤑 Mindset · Learn wisely. Build patiently.</footer>
+<header>
+  <a class="logo" href="#" style="text-decoration:none">🤑 MINDSET</a>
+  <nav aria-label="Main navigation">
+    <a href="#ideas">Business Ideas</a>
+    <a href="#money">Money Tips</a>
+    <a href="#about">About</a>
+  </nav>
+</header>
+<main>
+  <section class="hero">
+    <div class="eyebrow">Your journey starts here</div>
+    <h1>Think Bigger.<br><span class="gold">Build Your Mindset.</span></h1>
+    <p>Practical business ideas, smarter money habits, and useful skills to help you take your next step — even when you're starting small.</p>
+    <a class="btn" href="#ideas">Explore Business Ideas ↗</a>
+    <a class="btn secondary" href="#money">Learn Money Basics</a>
+  </section>
+  <section id="ideas">
+    <div class="section-top">
+      <div class="eyebrow">Start with what you have</div>
+      <h2>Ideas worth exploring</h2>
+      <p>Simple starting points for people who want to learn about business.</p>
+    </div>
+    <div class="cards">
+      <article class="card"><div class="symbol">🛍️</div><h3>Buy and Resell</h3><p>Compare prices, find products people need, and work out your costs before selling.</p></article>
+      <article class="card"><div class="symbol">💻</div><h3>Digital Services</h3><p>Build skills in design, editing, or social media and offer useful services to clients.</p></article>
+      <article class="card"><div class="symbol">🥤</div><h3>Food and Drinks</h3><p>Explore a small food business while following local rules and tracking every cost.</p></article>
+      <article class="card"><div class="symbol">🧹</div><h3>Local Services</h3><p>Consider cleaning, gardening, or car washing and build trust through reliable work.</p></article>
+    </div>
+  </section>
+  <section id="money" class="feature">
+    <div class="section-top">
+      <div class="eyebrow">Build better habits</div>
+      <h2>Money basics that matter</h2>
+      <p>Learn the fundamentals before making big financial decisions.</p>
+    </div>
+    <div class="cards">
+      <article class="card"><div class="symbol">📊</div><h3>Know Your Numbers</h3><p>Track your income, spending, and business costs so you can make informed choices.</p></article>
+      <article class="card"><div class="symbol">🎯</div><h3>Set a Goal</h3><p>Choose a realistic savings target and make a plan you can maintain consistently.</p></article>
+      <article class="card"><div class="symbol">📚</div><h3>Learn a Skill</h3><p>Invest time in useful knowledge and be cautious of guaranteed-profit promises.</p></article>
+    </div>
+  </section>
+  <section id="about">
+    <div class="callout">
+      <div class="eyebrow">Welcome to the community</div>
+      <h2>Small steps. <span class="gold">Bigger possibilities.</span></h2>
+      <p class="muted">Mindset makes business and money topics easier to understand for beginners. Learn, test your ideas carefully, and keep improving.</p>
+      <a class="btn" href="#ideas">Take Your First Step</a>
+    </div>
+  </section>
+</main>
+<footer>
+  <p><strong>🤑 MINDSET</strong> · Think smart. Learn every day.</p>
+  <p>Educational content only; not personalised financial advice.</p>
+  <p>© 2026 Mindset</p>
+</footer>
 </body>
 </html>
