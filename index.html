@@ -5,6 +5,116 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Mindset helps beginners explore business ideas, smarter money habits and ways to grow their skills.">
 <title>Mindset — Think Bigger. Start Today.</title>
+
+/* 🤑 MINDSET — PREMIUM BLACK & GOLD */
+:root {
+  --gold: #d4af37;
+  --gold-light: #f5dc86;
+  --black: #080808;
+  --panel: #141414;
+  --muted: #b9b9b9;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--black) !important;
+  color: #f7f7f7;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.7;
+}
+
+header, nav {
+  background: rgba(8, 8, 8, 0.97);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.4);
+}
+
+h1, h2, h3 {
+  color: var(--gold-light);
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+}
+
+p {
+  color: var(--muted);
+}
+
+a {
+  color: var(--gold);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--gold-light);
+}
+
+button, .btn, .button {
+  background: linear-gradient(135deg, #f5dc86, #b58a21);
+  color: #080808;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+button:hover, .btn:hover, .button:hover {
+  transform: translateY(-2px);
+}
+
+section, article, .card {
+  border-radius: 14px;
+}
+
+.card, article {
+  background: var(--panel);
+  border: 1px solid #342b18;
+  padding: 20px;
+  transition: border-color 0.2s ease,
+              transform 0.2s ease;
+}
+
+.card:hover, article:hover {
+  border-color: var(--gold);
+  transform: translateY(-3px);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+footer {
+  background: #050505;
+  color: var(--muted);
+  border-top: 1px solid #342b18;
+  padding: 24px 16px;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: clamp(2rem, 9vw, 3rem);
+  }
+
+  section {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .card, article {
+    padding: 16px;
+  }
+
+  button, .btn, .button {
+    max-width: 100%;
+  }
+}
 <style>
 :root{--gold:#f5c542;--bg:#0c0d10;--panel:#17191e;--muted:#b6bac5;--white:#fff}
 *{box-sizing:border-box}
