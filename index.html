@@ -550,5 +550,224 @@ function makeBusinessPlan() {
     </a>
   </div>
 </section>
+
+<section id="business-journey" style="background:#080808;color:#fff;padding:40px 18px;font-family:Arial,sans-serif;">
+  <div style="max-width:700px;margin:auto;background:#141414;border:1px solid #d4af37;border-radius:16px;padding:24px;">
+
+    <p style="color:#d4af37;font-weight:bold;letter-spacing:2px;">
+      🤑 MINDSET PROGRESS TRACKER
+    </p>
+
+    <h2 style="color:#f5dc86;">Your Business Journey</h2>
+
+    <p style="color:#bbb;">Complete these steps one at a time. Every step brings you closer to launching.</p>
+
+    <div style="height:12px;background:#333;border-radius:20px;overflow:hidden;">
+      <div id="journeyBar" style="height:12px;width:0%;background:#d4af37;transition:width .3s;"></div>
+    </div>
+
+    <p id="journeyCount" style="color:#f5dc86;font-weight:bold;">0 of 5 steps completed</p>
+
+    <div id="journeyTasks" style="line-height:2.2;">
+      <label style="display:block;border-bottom:1px solid #333;padding:8px 0;">
+        <input type="checkbox" onchange="updateJourney()"> Choose your business idea
+      </label>
+      <label style="display:block;border-bottom:1px solid #333;padding:8px 0;">
+        <input type="checkbox" onchange="updateJourney()"> Set your starting budget
+      </label>
+      <label style="display:block;border-bottom:1px solid #333;padding:8px 0;">
+        <input type="checkbox" onchange="updateJourney()"> Research your customers
+      </label>
+      <label style="display:block;border-bottom:1px solid #333;padding:8px 0;">
+        <input type="checkbox" onchange="updateJourney()"> Calculate your costs
+      </label>
+      <label style="display:block;padding:8px 0;">
+        <input type="checkbox" onchange="updateJourney()"> Take your first business action
+      </label>
+    </div>
+
+    <p id="journeyMessage" style="color:#d4af37;font-weight:bold;">
+      Your journey starts with one step!
+    </p>
+
+    <button type="button" onclick="resetJourney()" style="background:#d4af37;color:#080808;padding:12px 18px;border:0;border-radius:8px;font-weight:bold;">
+      RESET PROGRESS
+    </button>
+
+  </div>
+</section>
+
+<script>
+function updateJourney() {
+  const tasks = document.querySelectorAll(
+    '#journeyTasks input[type="checkbox"]'
+  );
+  const done = [...tasks].filter(task => task.checked).length;
+  const percent = (done / tasks.length) * 100;
+
+  document.getElementById('journeyBar').style.width =
+    percent + '%';
+
+  document.getElementById('journeyCount').textContent =
+    done + ' of ' + tasks.length + ' steps completed (' +
+    Math.round(percent) + '%)';
+
+  document.getElementById('journeyMessage').textContent =
+    done === tasks.length
+      ? '🏆 Amazing! You completed your starter checklist!'
+      : done === 0
+        ? 'Your journey starts with one step!'
+        : '🔥 Great progress! Keep moving forward.';
+}
+
+function resetJourney() {
+  document.querySelectorAll(
+    '#journeyTasks input[type="checkbox"]'
+  ).forEach(task => task.checked = false);
+
+  updateJourney();
+}
+</script>
+
+<section id="profit-calculator" style="background:#080808;color:#fff;padding:45px 18px;font-family:Arial,sans-serif;">
+  <div style="max-width:700px;margin:auto;background:#141414;border:1px solid #d4af37;border-radius:18px;padding:24px;box-sizing:border-box;">
+
+    <p style="color:#d4af37;font-weight:bold;letter-spacing:2px;">
+      🤑 MINDSET MONEY TOOLS
+    </p>
+
+    <h2 style="color:#f5dc86;font-size:clamp(28px,5vw,38px);margin-bottom:10px;">
+      Profit Calculator
+    </h2>
+
+    <p style="color:#bbb;line-height:1.7;">
+      Calculate how much you could make from a sale. Enter your selling price and all your costs below.
+    </p>
+
+    <label for="profitSelling" style="display:block;color:#f5dc86;margin-top:22px;">
+      Selling price per item (R)
+    </label>
+    <input id="profitSelling" type="number" min="0" step="0.01" inputmode="decimal" placeholder="e.g. 150.00"
+      style="width:100%;box-sizing:border-box;padding:13px;margin-top:8px;background:#080808;color:white;border:1px solid #66501f;border-radius:8px;font-size:16px;">
+
+    <label for="profitCost" style="display:block;color:#f5dc86;margin-top:18px;">
+      Cost to buy or make one item (R)
+    </label>
+    <input id="profitCost" type="number" min="0" step="0.01" inputmode="decimal" placeholder="e.g. 80.00"
+      style="width:100%;box-sizing:border-box;padding:13px;margin-top:8px;background:#080808;color:white;border:1px solid #66501f;border-radius:8px;font-size:16px;">
+
+    <label for="profitExtra" style="display:block;color:#f5dc86;margin-top:18px;">
+      Other costs per item (R)
+    </label>
+    <input id="profitExtra" type="number" min="0" step="0.01" inputmode="decimal" placeholder="e.g. 10.00"
+      style="width:100%;box-sizing:border-box;padding:13px;margin-top:8px;background:#080808;color:white;border:1px solid #66501f;border-radius:8px;font-size:16px;">
+
+    <label for="profitQuantity" style="display:block;color:#f5dc86;margin-top:18px;">
+      Number of items sold
+    </label>
+    <input id="profitQuantity" type="number" min="1" step="1" value="1" inputmode="numeric"
+      style="width:100%;box-sizing:border-box;padding:13px;margin-top:8px;background:#080808;color:white;border:1px solid #66501f;border-radius:8px;font-size:16px;">
+
+    <button type="button" onclick="calculateMindsetProfit()"
+      style="width:100%;padding:15px;margin-top:24px;background:linear-gradient(135deg,#f5dc86,#d4af37);color:#080808;border:0;border-radius:8px;font-size:16px;font-weight:bold;cursor:pointer;">
+      CALCULATE MY PROFIT →
+    </button>
+
+    <div id="profitResult" aria-live="polite" style="display:none;margin-top:24px;padding:20px;background:#080808;border:1px solid #66501f;border-radius:12px;">
+      <p style="color:#aaa;margin:0;">Estimated total profit</p>
+      <h3 id="profitTotal" style="color:#f5dc86;font-size:32px;margin:8px 0;">R0.00</h3>
+      <p id="profitPerItem" style="color:#ddd;"></p>
+      <p id="profitMargin" style="color:#d4af37;"></p>
+      <p id="profitBreakdown" style="color:#aaa;line-height:1.7;font-size:14px;"></p>
+      <p id="profitMessage" style="font-weight:bold;"></p>
+    </div>
+
+    <p style="color:#888;font-size:12px;line-height:1.6;margin-top:20px;">
+      This is an estimate based on the costs entered. Include all relevant expenses, such as delivery, packaging, fees and taxes, where applicable. Actual profit may differ.
+    </p>
+  </div>
+</section>
+
+<script>
+function calculateMindsetProfit() {
+  const sellingField = document.getElementById('profitSelling');
+  const costField = document.getElementById('profitCost');
+  const extraField = document.getElementById('profitExtra');
+  const quantityField = document.getElementById('profitQuantity');
+  const result = document.getElementById('profitResult');
+
+  result.style.display = 'block';
+
+  const fields = [
+    { field: sellingField, name: 'selling price' },
+    { field: costField, name: 'item cost' },
+    { field: extraField, name: 'other costs' },
+    { field: quantityField, name: 'quantity' }
+  ];
+
+  for (const item of fields) {
+    if (item.field.value.trim() === '') {
+      result.innerHTML =
+        '<p style="color:#ff9b9b;">Please enter your ' +
+        item.name + '.</p>';
+      return;
+    }
+  }
+
+  const selling = Number(sellingField.value);
+  const cost = Number(costField.value);
+  const extra = Number(extraField.value);
+  const quantity = Number(quantityField.value);
+
+  if (
+    ![selling, cost, extra, quantity].every(Number.isFinite) ||
+    selling < 0 || cost < 0 || extra < 0 ||
+    quantity < 1 || !Number.isInteger(quantity) ||
+    sellingField.valueAsNumber < 0 ||
+    costField.valueAsNumber < 0 ||
+    extraField.valueAsNumber < 0
+  ) {
+    result.innerHTML =
+      '<p style="color:#ff9b9b;">Please enter valid non-negative prices and a whole number of items (at least one).</p>';
+    return;
+  }
+
+  const money = amount => 'R' + amount.toLocaleString(
+    'en-ZA',
+    { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+  );
+
+  const revenue = selling * quantity;
+  const totalCost = (cost + extra) * quantity;
+  const perItem = selling - cost - extra;
+  const totalProfit = revenue - totalCost;
+  const margin = revenue > 0 ? totalProfit / revenue * 100 : null;
+
+  document.getElementById('profitTotal').textContent =
+    money(totalProfit);
+
+  document.getElementById('profitTotal').style.color =
+    totalProfit > 0 ? '#f5dc86' :
+    totalProfit < 0 ? '#ff8585' : '#ffffff';
+
+  document.getElementById('profitPerItem').textContent =
+    'Estimated profit per item: ' + money(perItem);
+
+  document.getElementById('profitMargin').textContent =
+    margin === null
+      ? 'Profit margin: not available when revenue is zero'
+      : 'Profit margin: ' + margin.toFixed(2) + '%';
+
+  document.getElementById('profitBreakdown').textContent =
+    'Total sales: ' + money(revenue) +
+    ' | Total costs: ' + money(totalCost);
+
+  document.getElementById('profitMessage').textContent =
+    totalProfit > 0 ? '🔥 Your sales are above your entered costs!' :
+    totalProfit < 0 ? '⚠️ You are making a loss at this price.' :
+    'Your sales cover your entered costs, with no profit.';
+
+}
+</script>
 </body>
 </html>
