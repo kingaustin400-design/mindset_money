@@ -1,0 +1,522 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0a0a">
+<title>Business Budget Planner | Mindset</title>
+<meta name="description" content="Plan your business income and expenses with the Mindset Business Budget Planner.">
+<style>
+:root {
+  --gold: #e8bd55;
+  --gold-light: #ffe7a0;
+  --bg: #090909;
+  --panel: #151515;
+  --muted: #aaa;
+  --green: #63df9b;
+  --red: #ff7777;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: #f7f7f7;
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+}
+header {
+  padding: 20px 16px;
+  border-bottom: 1px solid #302713;
+  background: #0d0d0d;
+  text-align: center;
+}
+.logo {
+  color: var(--gold);
+  font-size: 27px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+.logo span { color: white; }
+header p { color: var(--muted); margin: 5px 0 0; }
+nav { margin-top: 14px; }
+nav a {
+  color: var(--gold-light);
+  text-decoration: none;
+  margin: 0 8px;
+  font-size: 14px;
+}
+nav a:hover { text-decoration: underline; }
+main { width: min(1050px, 100%); margin: auto; padding: 22px 15px 45px; }
+.hero {
+  padding: 28px 20px;
+  border: 1px solid #614b20;
+  border-radius: 20px;
+  background: radial-gradient(ellipse at top right, #403016, #17130c 50%, #111 100%);
+  animation: rise .65s ease both;
+}
+.eyebrow {
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 12px;
+  font-weight: bold;
+}
+h1 { font-size: clamp(28px, 6vw, 43px); line-height: 1.1; margin: 10px 0; }
+h1 span { color: var(--gold); }
+.hero p { color: #d0d0d0; max-width: 600px; }
+.card {
+  background: var(--panel);
+  border: 1px solid #303030;
+  border-radius: 16px;
+  padding: 18px;
+  margin-top: 17px;
+  animation: rise .5s ease both;
+}
+h2 { font-size: 19px; margin: 0 0 15px; }
+label { display: block; color: #d6d6d6; font-size: 13px; margin-bottom: 6px; }
+input, select {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  background: #0c0c0c;
+  color: white;
+  border: 1px solid #414141;
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 16px;
+  outline: none;
+}
+input:focus, select:focus { border-color: var(--gold); }
+.field { margin-bottom: 14px; }
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.stat {
+  padding: 16px;
+  background: #101010;
+  border: 1px solid #35302a;
+  border-radius: 14px;
+  min-width: 0;
+}
+.stat small { display: block; color: #bcbcbc; margin-bottom: 7px; }
+.amount { font-size: clamp(18px, 4vw, 25px); font-weight: bold; overflow-wrap: anywhere; }
+.gold { color: var(--gold); }
+.green { color: var(--green); }
+.red { color: var(--red); }
+button {
+  cursor: pointer;
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  transition: transform .18s, filter .18s;
+}
+button:hover { filter: brightness(1.12); transform: translateY(-2px); }
+button:active { transform: scale(.98); }
+.primary { background: linear-gradient(110deg, #f5d779, #c79632); color: #171107; }
+.secondary { background: #292929; border: 1px solid #484848; color: white; }
+.danger { background: #351818; color: #ffb0b0; border: 1px solid #653333; }
+.actions { display: flex; flex-wrap: wrap; gap: 9px; }
+.expense-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(90px, .8fr) auto;
+  gap: 9px;
+  align-items: end;
+  padding: 13px 0;
+  border-bottom: 1px solid #303030;
+  animation: rise .25s ease both;
+}
+.expense-row:last-child { border-bottom: 0; }
+.remove { padding: 10px 12px; }
+.progress-track { height: 12px; background: #303030; border-radius: 99px; overflow: hidden; margin: 10px 0; }
+.progress-bar {
+  height: 100%; width: 0;
+  background: linear-gradient(90deg, #a97618, #ffe49a);
+  border-radius: 99px;
+  transition: width .6s ease;
+}
+.message { color: #d0d0d0; font-size: 14px; }
+.note { color: #a8a8a8; font-size: 12px; }
+footer { text-align: center; padding: 25px 15px; border-top: 1px solid #292929; color: #aaa; font-size: 13px; }
+@keyframes rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (min-width: 720px) {
+  .stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .workspace { display: grid; grid-template-columns: 1fr 1fr; gap: 17px; align-items: start; }
+  .workspace .card { margin-top: 17px; }
+  .hero { padding: 38px; }
+}
+@media (max-width: 390px) {
+  .expense-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .expense-row .remove { grid-column: 2; justify-self: end; }
+  .grid { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">🤑 <span>MINDSET</span></div>
+  <p>Think smarter. Build your future.</p>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="index.html#tools">Business tools</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="eyebrow">Your money. Your plan.</div>
+    <h1>Business Budget <span>Planner</span></h1>
+    <p>Give every rand a purpose. Plan your monthly income, control your expenses and see what remains for your business to grow.</p>
+  </section>
+
+  <section class="card">
+    <h2>📅 Plan your month</h2>
+    <div class="grid">
+      <div class="field">
+        <label for="month">Budget month</label>
+        <input type="month" id="month">
+      </div>
+      <div class="field">
+        <label for="income">Expected monthly income (R)</label>
+        <input type="number" id="income" min="0" step="0.01" placeholder="e.g. 10000">
+      </div>
+    </div>
+    <div class="actions">
+      <button class="primary" id="sampleBtn" type="button">Load sample budget</button>
+      <button class="secondary" id="clearBtn" type="button">Clear budget</button>
+    </div>
+    <p class="note">Use your expected business income before expenses. Replace the sample figures with your own.</p>
+  </section>
+
+  <section class="card">
+    <h2>📊 Your budget summary</h2>
+    <div class="stats">
+      <div class="stat">
+        <small>Monthly income</small>
+        <div class="amount gold" id="incomeTotal">R 0.00</div>
+      </div>
+      <div class="stat">
+        <small>Total expenses</small>
+        <div class="amount" id="expenseTotal">R 0.00</div>
+      </div>
+      <div class="stat">
+        <small>Money remaining</small>
+        <div class="amount green" id="remaining">R 0.00</div>
+      </div>
+      <div class="stat">
+        <small>Budget used</small>
+        <div class="amount" id="used">0%</div>
+      </div>
+    </div>
+    <div class="progress-track" role="progressbar" aria-label="Percentage of income used" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressTrack">
+      <div class="progress-bar" id="progress"></div>
+    </div>
+    <p class="message" id="message" aria-live="polite">Enter your income and expenses to start planning.</p>
+  </section>
+
+  <div class="workspace">
+    <section class="card">
+      <h2>💸 Monthly expenses</h2>
+      <p class="note">Edit the amounts or add your own expense categories.</p>
+      <div id="expenses"></div>
+      <div class="actions" style="margin-top:15px">
+        <button class="primary" id="addBtn" type="button">+ Add expense</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>🎯 Budget breakdown</h2>
+      <p class="message">Your expenses compared with your expected income.</p>
+      <div id="breakdown"></div>
+      <div style="border-top:1px solid #333; padding-top:14px; margin-top:14px">
+        <div style="display:flex;justify-content:space-between;gap:10px">
+          <span>Total planned expenses</span>
+          <strong class="gold" id="breakdownTotal">R 0.00</strong>
+        </div>
+        <p class="note">Remaining money is not necessarily business profit. Remember to include taxes, debt payments and any costs you have not entered.</p>
+      </div>
+      <div class="actions">
+        <button class="secondary" id="exportBtn" type="button">Download CSV</button>
+        <button class="secondary" id="printBtn" type="button">Print budget</button>
+      </div>
+    </section>
+  </div>
+  <p class="note" style="text-align:center;margin-top:20px">Your budget is stored in this browser on this device. It is not uploaded to a server or automatically synced across devices.</p>
+</main>
+
+<footer>© <span id="year"></span> 🤑 Mindset · Build your future, one rand at a time.</footer>
+
+<script>
+(() => {
+  "use strict";
+
+  const $ = id => document.getElementById(id);
+  const STORAGE_KEY = "mindsetBusinessBudgetV1";
+  const currency = value => new Intl.NumberFormat("en-ZA", {
+    style: "currency", currency: "ZAR"
+  }).format(Number(value) || 0);
+
+  const defaultExpenses = () => [
+    { name: "Stock / supplies", amount: 0 },
+    { name: "Transport / delivery", amount: 0 },
+    { name: "Rent / workspace", amount: 0 },
+    { name: "Internet / data", amount: 0 },
+    { name: "Marketing", amount: 0 },
+    { name: "Other expenses", amount: 0 }
+  ];
+
+  let expenses = defaultExpenses();
+  let income = 0;
+  let month = new Date().toISOString().slice(0, 7);
+
+  $("month").value = month;
+  $("year").textContent = new Date().getFullYear();
+
+  function safeAmount(value) {
+    const number = Number(value);
+    return Number.isFinite(number) && number > 0 ? number : 0;
+  }
+
+  function save() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        income, month, expenses
+      }));
+    } catch (error) {
+      console.warn("Budget could not be saved on this device.", error);
+    }
+  }
+
+  function load() {
+    try {
+      const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+      if (!data || !Array.isArray(data.expenses)) return;
+      income = safeAmount(data.income);
+      if (typeof data.month === "string" && /^\d{4}-\d{2}$/.test(data.month)) {
+        month = data.month;
+      }
+      expenses = data.expenses.slice(0, 100).map(item => ({
+        name: String(item.name || "Expense").slice(0, 60),
+        amount: safeAmount(item.amount)
+      }));
+    } catch (error) {
+      console.warn("Saved budget could not be loaded.", error);
+    }
+  }
+
+  function renderExpenses() {
+    const container = $("expenses");
+    container.replaceChildren();
+
+    expenses.forEach((expense, index) => {
+      const row = document.createElement("div");
+      row.className = "expense-row";
+
+      const nameWrap = document.createElement("div");
+      const nameLabel = document.createElement("label");
+      nameLabel.textContent = "Expense name";
+      const nameInput = document.createElement("input");
+      nameInput.type = "text";
+      nameInput.maxLength = 60;
+      nameInput.value = expense.name;
+      nameInput.setAttribute("aria-label", "Expense name " + (index + 1));
+      nameInput.addEventListener("input", () => {
+        expenses[index].name = nameInput.value;
+        save();
+        renderBreakdown();
+      });
+      nameWrap.append(nameLabel, nameInput);
+
+      const amountWrap = document.createElement("div");
+      const amountLabel = document.createElement("label");
+      amountLabel.textContent = "Amount (R)";
+      const amountInput = document.createElement("input");
+      amountInput.type = "number";
+      amountInput.min = "0";
+      amountInput.step = "0.01";
+      amountInput.inputMode = "decimal";
+      amountInput.placeholder = "0.00";
+      amountInput.value = expense.amount || "";
+      amountInput.setAttribute("aria-label", "Expense amount " + (index + 1));
+      amountInput.addEventListener("input", () => {
+        expenses[index].amount = safeAmount(amountInput.value);
+        save();
+        updateSummary();
+      });
+      amountWrap.append(amountLabel, amountInput);
+
+      const remove = document.createElement("button");
+      remove.type = "button";
+      remove.className = "danger remove";
+      remove.textContent = "Remove";
+      remove.setAttribute("aria-label", "Remove " + expense.name);
+      remove.addEventListener("click", () => {
+        expenses.splice(index, 1);
+        save();
+        renderExpenses();
+        updateSummary();
+      });
+
+      row.append(nameWrap, amountWrap, remove);
+      container.append(row);
+    });
+  }
+
+  function renderBreakdown() {
+    const container = $("breakdown");
+    container.replaceChildren();
+    const total = expenses.reduce((sum, item) => sum + safeAmount(item.amount), 0);
+
+    if (!expenses.length) {
+      const empty = document.createElement("p");
+      empty.className = "note";
+      empty.textContent = "Add an expense to see your breakdown.";
+      container.append(empty);
+    }
+
+    expenses.forEach(item => {
+      const amount = safeAmount(item.amount);
+      const wrap = document.createElement("div");
+      wrap.style.marginBottom = "16px";
+
+      const top = document.createElement("div");
+      top.style.display = "flex";
+      top.style.justifyContent = "space-between";
+      top.style.gap = "8px";
+      top.style.fontSize = "13px";
+
+      const name = document.createElement("span");
+      name.textContent = item.name || "Unnamed expense";
+      const value = document.createElement("strong");
+      value.textContent = currency(amount);
+      top.append(name, value);
+
+      const track = document.createElement("div");
+      track.className = "progress-track";
+      const bar = document.createElement("div");
+      bar.className = "progress-bar";
+      bar.style.width = (total > 0 ? Math.min(100, amount / total * 100) : 0) + "%";
+      track.append(bar);
+      wrap.append(top, track);
+      container.append(wrap);
+    });
+
+    $("breakdownTotal").textContent = currency(total);
+  }
+
+  function updateSummary() {
+    income = safeAmount($("income").value);
+    month = $("month").value || month;
+    const total = expenses.reduce((sum, item) => sum + safeAmount(item.amount), 0);
+    const balance = income - total;
+    const percent = income > 0 ? total / income * 100 : (total > 0 ? 100 : 0);
+
+    $("incomeTotal").textContent = currency(income);
+    $("expenseTotal").textContent = currency(total);
+    $("remaining").textContent = currency(balance);
+    $("remaining").className = "amount " + (balance < 0 ? "red" : "green");
+    $("used").textContent = income > 0 ? percent.toFixed(1) + "%" : (total > 0 ? "—" : "0%");
+    $("progress").style.width = Math.min(100, percent) + "%";
+    $("progressTrack").setAttribute("aria-valuenow", String(Math.round(Math.min(100, percent))));
+
+    if (income <= 0 && total <= 0) {
+      $("message").textContent = "Enter your income and expenses to start planning.";
+    } else if (income <= 0) {
+      $("message").textContent = "Add your expected income to see how these expenses compare.";
+    } else if (balance < 0) {
+      $("message").textContent = "⚠️ Your planned expenses exceed your income by " + currency(Math.abs(balance)) + ". Review your budget.";
+    } else if (balance === 0) {
+      $("message").textContent = "Your entire planned income is allocated. There is no money left over.";
+    } else if (percent >= 80) {
+      $("message").textContent = "You're using " + percent.toFixed(1) + "% of your income. Check whether you need a buffer for unexpected costs.";
+    } else {
+      $("message").textContent = "You have " + currency(balance) + " remaining after planned expenses. Keep reviewing your budget as costs change.";
+    }
+
+    save();
+    renderBreakdown();
+  }
+
+  $("income").addEventListener("input", updateSummary);
+  $("month").addEventListener("change", updateSummary);
+
+  $("addBtn").addEventListener("click", () => {
+    if (expenses.length >= 100) {
+      alert("You can add up to 100 expense categories.");
+      return;
+    }
+    expenses.push({ name: "New expense", amount: 0 });
+    save();
+    renderExpenses();
+    updateSummary();
+  });
+
+  $("sampleBtn").addEventListener("click", () => {
+    income = 15000;
+    $("income").value = income;
+    expenses = [
+      { name: "Stock / supplies", amount: 4500 },
+      { name: "Transport / delivery", amount: 900 },
+      { name: "Rent / workspace", amount: 2000 },
+      { name: "Internet / data", amount: 350 },
+      { name: "Marketing", amount: 600 },
+      { name: "Other expenses", amount: 650 }
+    ];
+    renderExpenses();
+    updateSummary();
+  });
+
+  $("clearBtn").addEventListener("click", () => {
+    if (!confirm("Clear this budget and remove its saved figures from this browser?")) return;
+    income = 0;
+    expenses = defaultExpenses();
+    $("income").value = "";
+    try { localStorage.removeItem(STORAGE_KEY); } catch (error) {}
+    renderExpenses();
+    updateSummary();
+  });
+
+  $("exportBtn").addEventListener("click", () => {
+    const rows = [
+      ["Mindset Business Budget Planner"],
+      ["Month", month],
+      ["Expected income (ZAR)", income.toFixed(2)],
+      [],
+      ["Expense", "Amount (ZAR)"],
+      ...expenses.map(item => [item.name, safeAmount(item.amount).toFixed(2)]),
+      [],
+      ["Total expenses (ZAR)", expenses.reduce((s, item) => s + safeAmount(item.amount), 0).toFixed(2)],
+      ["Money remaining (ZAR)", (income - expenses.reduce((s, item) => s + safeAmount(item.amount), 0)).toFixed(2)]
+    ];
+    const csv = rows.map(row => row.map(value =>
+      '"' + String(value ?? "").replace(/"/g, '""') + '"'
+    ).join(",")).join("\r\n");
+    const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "mindset-budget-" + (month || "plan") + ".csv";
+    document.body.append(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  });
+
+  $("printBtn").addEventListener("click", () => window.print());
+
+  load();
+  $("income").value = income || "";
+  $("month").value = month;
+  renderExpenses();
+  updateSummary();
+})();
+</script>
+</body>
+</html>
