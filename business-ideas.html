@@ -1,0 +1,250 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mindset | Business Idea Generator</title>
+<style>
+:root{--gold:#f5c451;--bg:#090909;--card:#171717;--muted:#c5c0b5}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at top,#30230b,#090909 60%);color:#fff;font-family:Arial,sans-serif;min-height:100vh}
+header{text-align:center;padding:28px 16px 10px}
+.logo{font-size:14px;font-weight:bold;letter-spacing:4px;color:var(--gold)}
+h1{font-size:clamp(29px,7vw,43px);margin:14px 0 8px}
+h1 span{color:var(--gold)}
+p{line-height:1.65}
+.subtitle{color:var(--muted);max-width:620px;margin:0 auto}
+main{max-width:850px;margin:24px auto;padding:0 15px 40px}
+.panel{background:rgba(20,20,20,.96);border:1px solid #59451d;border-radius:20px;padding:22px;margin-bottom:20px;box-shadow:0 12px 35px #0005}
+h2{font-size:21px;margin-top:0}
+label{display:block;color:var(--gold);font-weight:bold;margin:17px 0 8px}
+input,select{width:100%;padding:14px;border-radius:10px;border:1px solid #5a4a29;background:#0c0c0c;color:white;font-size:16px}
+button,.back{display:inline-block;text-align:center;background:var(--gold);color:#17120a;border:0;border-radius:10px;padding:14px 18px;font-weight:bold;font-size:15px;text-decoration:none;cursor:pointer}
+button{width:100%;margin-top:22px}
+button:hover,.back:hover{filter:brightness(1.08)}
+.hint{color:var(--muted);font-size:13px}
+.result{border:1px solid #57451f;background:linear-gradient(140deg,#201b10,#111);padding:19px;border-radius:15px;margin-top:14px}
+.result h3{color:var(--gold);margin:0 0 10px;font-size:20px}
+.result p{margin:8px 0;color:#e4dfd4}
+.tag{display:inline-block;border:1px solid #655126;color:var(--gold);padding:5px 9px;border-radius:20px;font-size:12px;margin:3px 3px 8px 0}
+.results-heading{color:var(--gold);margin-top:26px}
+.hidden{display:none}
+footer{text-align:center;color:#9b9588;font-size:12px;padding:10px 15px 30px}
+a{color:var(--gold)}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">🤑 MINDSET</div>
+  <h1>Business Idea <span>Generator</span></h1>
+  <p class="subtitle">Your budget. Your skills. Your next business move. Discover ideas you can explore in South Africa.</p>
+</header>
+
+<main>
+<section class="panel">
+  <h2>✨ Build your business profile</h2>
+  <label for="budget">How much money can you start with? (R)</label>
+  <input id="budget" type="number" min="0" step="50" value="500" placeholder="Example: 500">
+  <p class="hint">Enter your available starting budget in South African rand.</p>
+
+  <label for="skill">What are you good at?</label>
+  <select id="skill">
+    <option value="any">I'm open to learning</option>
+    <option value="selling">Selling and talking to people</option>
+    <option value="digital">Phones, computers and design</option>
+    <option value="practical">Practical work and helping people</option>
+    <option value="food">Cooking and preparing food</option>
+  </select>
+
+  <label for="interest">What interests you most?</label>
+  <select id="interest">
+    <option value="any">Show me different industries</option>
+    <option value="products">Products and reselling</option>
+    <option value="online">Online business</option>
+    <option value="services">Services in my community</option>
+    <option value="food">Food and drinks</option>
+  </select>
+
+  <button type="button" id="generate">Generate My Business Ideas ✨</button>
+</section>
+
+<section id="output" class="panel hidden" aria-live="polite">
+  <h2>Your Business Opportunities 💰</h2>
+  <p class="hint">Use these ideas as starting points. Confirm local costs and demand before spending money.</p>
+  <div id="results"></div>
+</section>
+
+<p><a class="back" href="index.html">← Back to Mindset Home</a></p>
+</main>
+
+<footer>🤑 Mindset — Think smart. Start small. Build consistently.</footer>
+
+<script>
+const ideas = [
+ {
+  name:"Social Media Assistant",
+  min:0,max:500,skills:["digital"],interest:"online",
+  cost:"R0–R500",model:"Service",
+  desc:"Help small businesses prepare posts, captions and simple promotional graphics.",
+  first:"Create three sample posts for a pretend business and show them to local businesses.",
+  risk:"You need a phone or computer, data and permission to use any client materials."
+ },
+ {
+  name:"Graphic Design Starter",
+  min:0,max:700,skills:["digital"],interest:"online",
+  cost:"R0–R700",model:"Digital service",
+  desc:"Design simple flyers, invitations, menus and social media graphics.",
+  first:"Make three sample designs and offer a small, clearly defined starter package.",
+  risk:"Free tools may be enough to start, but data, equipment and revisions take time."
+ },
+ {
+  name:"Cleaning Service",
+  min:200,max:1500,skills:["practical"],interest:"services",
+  cost:"R200–R1,500",model:"Local service",
+  desc:"Offer agreed cleaning services for homes, rooms or small offices.",
+  first:"List your services, check supply costs and ask potential customers what they need.",
+  risk:"Transport, cleaning supplies, safety and liability can add costs."
+ },
+ {
+  name:"Car Washing",
+  min:250,max:1500,skills:["practical"],interest:"services",
+  cost:"R250–R1,500",model:"Local service",
+  desc:"Wash cars for customers at an appropriate location with permission.",
+  first:"Price water, soap, cloths and transport, then test demand with a few customers.",
+  risk:"Check water restrictions, site permission and the cost of supplies."
+ },
+ {
+  name:"Clothing Reselling",
+  min:300,max:2500,skills:["selling"],interest:"products",
+  cost:"R300–R2,500",model:"Product sales",
+  desc:"Resell carefully selected second-hand or affordable clothing.",
+  first:"Research local selling prices and start with a very small batch or pre-orders.",
+  risk:"Unsold stock, delivery and returns can reduce your profit."
+ },
+ {
+  name:"Phone Accessories",
+  min:400,max:3000,skills:["selling"],interest:"products",
+  cost:"R400–R3,000",model:"Product sales",
+  desc:"Explore selling phone covers, screen protectors and other popular accessories.",
+  first:"Ask potential buyers which models they use and compare supplier prices before ordering.",
+  risk:"Wrong-model stock, product quality and competition can tie up your cash."
+ },
+ {
+  name:"Snack Reselling",
+  min:200,max:1500,skills:["selling","food"],interest:"food",
+  cost:"R200–R1,500",model:"Food sales",
+  desc:"Sell packaged snacks or drinks where selling is permitted.",
+  first:"Check demand, calculate the cost per item and choose a permitted selling location.",
+  risk:"Check local rules, expiry dates, storage and any venue permissions."
+ },
+ {
+  name:"Homemade Food Orders",
+  min:500,max:3000,skills:["food"],interest:"food",
+  cost:"R500–R3,000",model:"Food business",
+  desc:"Take small orders for a simple menu that you can prepare consistently.",
+  first:"Cost ingredients and packaging, test a small menu and calculate a price per portion.",
+  risk:"Food safety, permits, equipment and waste must be considered."
+ },
+ {
+  name:"Tutoring",
+  min:0,max:500,skills:["practical"],interest:"services",
+  cost:"R0–R500",model:"Education service",
+  desc:"Help learners practise a subject you understand well.",
+  first:"Choose one subject and level, prepare a sample lesson and share your offer with families.",
+  risk:"Be honest about your qualifications and arrange safe, suitable meeting places."
+ },
+ {
+  name:"Online Reselling by Order",
+  min:100,max:1000,skills:["selling"],interest:"online",
+  cost:"R100–R1,000",model:"Online sales",
+  desc:"Find genuine customer interest in a product before placing a small supplier order.",
+  first:"Verify the supplier, confirm stock and delivery times, and explain terms clearly to customers.",
+  risk:"Supplier scams, delays, refunds and customer trust are important risks."
+ }
+];
+
+const money = n => "R" + n.toLocaleString("en-ZA",{maximumFractionDigits:2});
+
+document.getElementById("generate").addEventListener("click", function(){
+ const budgetInput = document.getElementById("budget");
+ const budget = Number(budgetInput.value);
+ const skill = document.getElementById("skill").value;
+ const interest = document.getElementById("interest").value;
+ const output = document.getElementById("output");
+ const results = document.getElementById("results");
+
+ if(budgetInput.value.trim()==="" || !Number.isFinite(budget) || budget<0){
+   alert("Please enter a valid budget of zero rand or more.");
+   budgetInput.focus();
+   return;
+ }
+
+ let matches = ideas.filter(item => {
+   const fitsBudget = item.min <= budget;
+   const fitsSkill = skill==="any" || item.skills.includes(skill);
+   const fitsInterest = interest==="any" || item.interest===interest;
+   return fitsBudget && fitsSkill && fitsInterest;
+ });
+
+ if(matches.length===0){
+   matches = ideas.filter(item => item.min<=budget);
+ }
+
+ matches.sort((a,b) => a.min-b.min);
+ const chosen = matches.slice(0,4);
+
+ results.replaceChildren();
+
+ if(chosen.length===0){
+   const message=document.createElement("p");
+   message.textContent="There are no matching ideas in this starter list for your budget. Consider a lower-cost service, using equipment you already own, or building skills before investing.";
+   results.appendChild(message);
+ } else {
+   chosen.forEach((item,index)=>{
+     const card=document.createElement("article");
+     card.className="result";
+
+     const title=document.createElement("h3");
+     title.textContent=(index+1)+". "+item.name;
+     card.appendChild(title);
+
+     const tag=document.createElement("span");
+     tag.className="tag";
+     tag.textContent=item.model;
+     card.appendChild(tag);
+
+     const cost=document.createElement("p");
+     cost.innerHTML="<strong>Example startup range:</strong> ";
+     cost.appendChild(document.createTextNode(item.cost));
+     card.appendChild(cost);
+
+     const description=document.createElement("p");
+     description.textContent=item.desc;
+     card.appendChild(description);
+
+     const first=document.createElement("p");
+     first.innerHTML="<strong>First step:</strong> ";
+     first.appendChild(document.createTextNode(item.first));
+     card.appendChild(first);
+
+     const risk=document.createElement("p");
+     risk.innerHTML="<strong>Watch out for:</strong> ";
+     risk.appendChild(document.createTextNode(item.risk));
+     card.appendChild(risk);
+
+     results.appendChild(card);
+   });
+ }
+
+ const note=document.createElement("p");
+ note.className="hint";
+ note.textContent="Ideas are selected using your budget and preferences where possible. Startup ranges are illustrative estimates, not supplier quotes. They exclude some possible costs and do not guarantee sales or profit.";
+ results.appendChild(note);
+
+ output.classList.remove("hidden");
+ output.scrollIntoView({behavior:"smooth",block:"start"});
+});
+</script>
+</body>
+</html>
