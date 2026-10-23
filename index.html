@@ -769,5 +769,143 @@ function calculateMindsetProfit() {
 
 }
 </script>
+
+<section id="break-even-calculator" style="background:#080808;color:#fff;padding:45px 18px;font-family:Arial,sans-serif;">
+  <div style="max-width:700px;margin:auto;background:#141414;border:1px solid #d4af37;border-radius:18px;padding:24px;box-sizing:border-box;">
+
+    <p style="color:#d4af37;font-weight:bold;letter-spacing:2px;">
+      🤑 MINDSET MONEY TOOLS
+    </p>
+
+    <h2 style="color:#f5dc86;font-size:clamp(27px,5vw,38px);">
+      Break-Even Calculator
+    </h2>
+
+    <p style="color:#bbb;line-height:1.7;">
+      Find out how many items you need to sell to cover your costs before making a profit.
+    </p>
+
+    <label for="beFixed" style="display:block;color:#f5dc86;margin-top:20px;">
+      Total fixed costs (R)
+    </label>
+    <input id="beFixed" type="number" min="0" step="0.01" inputmode="decimal" placeholder="e.g. 500"
+      style="width:100%;box-sizing:border-box;padding:13px;margin-top:8px;background:#080808;color:#fff;border:1px solid #66501f;border-radius:8px;font-size:16px;">
+
+    <label for="beVariable" style="display:block;color:#f5dc86;margin-top:18px;">
+      Variable cost per item (R)
+    </label>
+    <input id="beVariable" type="number" min="0" step="0.01" inputmode="decimal" placeholder="e.g. 20"
+      style="width:100%;box-sizing:border-box;padding:13px;margin-top:8px;background:#080808;color:#fff;border:1px solid #66501f;border-radius:8px;font-size:16px;">
+
+    <label for="bePrice" style="display:block;color:#f5dc86;margin-top:18px;">
+      Selling price per item (R)
+    </label>
+    <input id="bePrice" type="number" min="0" step="0.01" inputmode="decimal" placeholder="e.g. 50"
+      style="width:100%;box-sizing:border-box;padding:13px;margin-top:8px;background:#080808;color:#fff;border:1px solid #66501f;border-radius:8px;font-size:16px;">
+
+    <button type="button" onclick="calculateMindsetBreakEven()"
+      style="width:100%;padding:15px;margin-top:24px;background:linear-gradient(135deg,#f5dc86,#d4af37);color:#080808;border:0;border-radius:8px;font-weight:bold;font-size:16px;cursor:pointer;">
+      CALCULATE BREAK-EVEN →
+    </button>
+
+    <div id="beResult" aria-live="polite" style="display:none;margin-top:24px;padding:20px;background:#080808;border:1px solid #66501f;border-radius:12px;">
+      <p style="color:#aaa;margin:0;">Your break-even target</p>
+      <h3 id="beUnits" style="color:#f5dc86;font-size:32px;margin:8px 0;"></h3>
+      <p id="beRevenue" style="color:#ddd;"></p>
+      <p id="beContribution" style="color:#d4af37;"></p>
+      <p id="beExplanation" style="color:#bbb;line-height:1.7;"></p>
+    </div>
+
+    <p style="color:#888;font-size:12px;line-height:1.6;margin-top:20px;">
+      Estimates assume fixed costs stay constant and each item sells at the entered price. Include relevant costs and taxes in your estimates. Actual results may differ.
+    </p>
+
+  </div>
+</section>
+
+<script>
+function calculateMindsetBreakEven() {
+  const fixedField = document.getElementById('beFixed');
+  const variableField = document.getElementById('beVariable');
+  const priceField = document.getElementById('bePrice');
+  const result = document.getElementById('beResult');
+
+  result.style.display = 'block';
+
+  const fields = [
+    { field: fixedField, name: 'fixed costs' },
+    { field: variableField, name: 'variable cost per item' },
+    { field: priceField, name: 'selling price per item' }
+  ];
+
+  for (const item of fields) {
+    if (item.field.value.trim() === '') {
+      result.innerHTML =
+        '<p style="color:#ff9b9b;">Please enter your ' +
+        item.name + '.</p>';
+      return;
+    }
+  }
+
+  const fixed = Number(fixedField.value);
+  const variable = Number(variableField.value);
+  const price = Number(priceField.value);
+
+  if (
+    ![fixed, variable, price].every(Number.isFinite) ||
+    fixed < 0 || variable < 0 || price < 0
+  ) {
+    result.innerHTML =
+      '<p style="color:#ff9b9b;">Please enter valid non-negative amounts.</p>';
+    return;
+  }
+
+  const money = amount => 'R' + amount.toLocaleString(
+    'en-ZA',
+    { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+  );
+
+  const contribution = price - variable;
+
+  if (contribution <= 0) {
+    document.getElementById('beUnits').textContent = 'No break-even';
+    document.getElementById('beRevenue').textContent = '';
+    document.getElementById('beContribution').textContent =
+      'Contribution per item: ' + money(contribution);
+    document.getElementById('beExplanation').textContent =
+      'Your selling price must be higher than the variable cost per item to cover fixed costs and reach break-even.';
+    return;
+  }
+
+  const units = Math.ceil(fixed / contribution);
+  const revenue = units * price;
+  const surplus = units * contribution - fixed;
+
+  document.getElementById('beUnits').textContent =
+    units.toLocaleString('en-ZA') +
+    (units === 1 ? ' item' : ' items');
+
+  document.getElementById('beRevenue').textContent =
+    'Sales needed: ' + money(revenue);
+
+  document.getElementById('beContribution').textContent =
+    'Contribution per item: ' + money(contribution);
+
+  document.getElementById('beExplanation').textContent =
+    fixed === 0
+      ? 'You have no fixed costs entered. You cover the variable cost of each sale at the entered price.'
+      : 'At this target, your total contribution is ' +
+        money(units * contribution) +
+        ', covering ' + money(fixed) +
+        ' in fixed costs. The amount above break-even is ' +
+        money(surplus) + '.';
+
+}
+</script>
+
+<a href="#break-even-calculator"
+   style="color:#d4af37;text-decoration:none;font-weight:bold;">
+  Break-Even Calculator
+</a>
 </body>
 </html>
