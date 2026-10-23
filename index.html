@@ -409,6 +409,11 @@ function makeBusinessPlan() {
   result.style.display = 'block';
 }
 </script>
+<a href="#savings-tracker" style="color:#d4af37;text-decoration:none;font-weight:bold;">Savings Tracker</a>
+<a href="#break-even-calculator"
+   style="color:#d4af37;text-decoration:none;font-weight:bold;">
+  Break-Even Calculator
+</a>
 
   </div>
 </section>
@@ -907,5 +912,93 @@ function calculateMindsetBreakEven() {
    style="color:#d4af37;text-decoration:none;font-weight:bold;">
   Break-Even Calculator
 </a>
+
+<!-- MINDSET SAVINGS GOAL TRACKER -->
+<section id="savings-tracker" style="background:#080808;color:#fff;padding:35px 20px;margin:25px 0;border:1px solid #d4af37;border-radius:15px;font-family:Arial,sans-serif;">
+
+  <h2 style="color:#d4af37;text-align:center;">💰 Savings Goal Tracker</h2>
+
+  <p style="text-align:center;color:#ccc;">
+    Set a savings goal, track your progress, and stay focused!
+  </p>
+
+  <label for="saveGoal">Your savings goal (R)</label>
+  <input id="saveGoal" type="number" min="1" value="10000"
+    style="display:block;width:100%;box-sizing:border-box;padding:12px;margin:8px 0 18px;border-radius:8px;">
+
+  <label for="saveCurrent">Money saved so far (R)</label>
+  <input id="saveCurrent" type="number" min="0" value="0"
+    style="display:block;width:100%;box-sizing:border-box;padding:12px;margin:8px 0 18px;border-radius:8px;">
+
+  <button type="button" onclick="updateSavings()"
+    style="width:100%;padding:13px;background:#d4af37;color:#080808;border:0;border-radius:8px;font-weight:bold;font-size:16px;">
+    Update My Progress
+  </button>
+
+  <div style="background:#333;height:22px;border-radius:20px;overflow:hidden;margin-top:25px;">
+    <div id="saveBar" style="width:0%;height:22px;background:#d4af37;transition:width .4s;"></div>
+  </div>
+
+  <h3 id="savePercent" style="color:#d4af37;text-align:center;">0% saved</h3>
+
+  <p id="saveRemaining" style="text-align:center;">R10,000 left to reach your goal.</p>
+
+  <p id="saveMessage" style="text-align:center;color:#ccc;">
+    Every rand saved brings you closer to your goal!
+  </p>
+
+</section>
+
+<script>
+function updateSavings() {
+  const goal = Number(document.getElementById("saveGoal").value);
+  const saved = Number(document.getElementById("saveCurrent").value);
+
+  if (!Number.isFinite(goal) || !Number.isFinite(saved) ||
+      goal <= 0 || saved < 0) {
+    alert("Please enter a goal above zero and savings of zero or more.");
+    return;
+  }
+
+  const percent = Math.round((saved / goal) * 100);
+  const barPercent = Math.min(percent, 100);
+  const remaining = Math.max(goal - saved, 0);
+
+  document.getElementById("saveBar").style.width = barPercent + "%";
+  document.getElementById("savePercent").textContent =
+    percent + "% saved";
+
+  document.getElementById("saveRemaining").textContent =
+    remaining === 0
+      ? "You have reached your savings goal!"
+      : "R" + remaining.toLocaleString("en-ZA") +
+        " left to reach your goal.";
+
+  document.getElementById("saveMessage").textContent =
+    saved >= goal
+      ? "🎉 Congratulations! You reached your goal!"
+      : "Keep going! Small savings can add up over time.";
+
+  try {
+    localStorage.setItem("mindsetSaveGoal", goal);
+    localStorage.setItem("mindsetSaveCurrent", saved);
+  } catch (e) {}
+}
+
+try {
+  const savedGoal = localStorage.getItem("mindsetSaveGoal");
+  const savedAmount = localStorage.getItem("mindsetSaveCurrent");
+
+  if (savedGoal !== null) {
+    document.getElementById("saveGoal").value = savedGoal;
+  }
+
+  if (savedAmount !== null) {
+    document.getElementById("saveCurrent").value = savedAmount;
+  }
+} catch (e) {}
+
+updateSavings();
+</script>
 </body>
 </html>
