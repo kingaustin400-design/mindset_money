@@ -284,6 +284,132 @@ footer {
       </a>
     </div>
 
+<section id="business-starter" style="background:#080808;color:#fff;padding:45px 18px;font-family:Arial,sans-serif;">
+  <div style="max-width:700px;margin:auto;background:#141414;border:1px solid #d4af37;border-radius:16px;padding:24px;">
+
+    <p style="color:#d4af37;letter-spacing:2px;font-weight:bold;">
+      🤑 MINDSET BUSINESS BUILDER
+    </p>
+
+    <h2 style="color:#f5dc86;">Start Your First Business</h2>
+
+    <p style="color:#c5c5c5;line-height:1.7;">
+      Choose an idea and enter your starting budget. Get a simple plan to help you take your first step.
+    </p>
+
+    <label for="bizType" style="display:block;margin-top:20px;color:#f5dc86;">
+      Choose your business idea
+    </label>
+
+    <select id="bizType" style="width:100%;padding:13px;margin-top:8px;background:#080808;color:white;border:1px solid #d4af37;border-radius:8px;">
+      <option value="reselling">Reselling products</option>
+      <option value="online">Online services</option>
+      <option value="food">Food and drinks</option>
+      <option value="services">Service business</option>
+    </select>
+
+    <label for="bizBudget" style="display:block;margin-top:20px;color:#f5dc86;">
+      Your starting budget (R)
+    </label>
+
+    <input id="bizBudget" type="number" min="0" step="10" placeholder="e.g. 300" style="box-sizing:border-box;width:100%;padding:13px;margin-top:8px;background:#080808;color:white;border:1px solid #d4af37;border-radius:8px;">
+
+    <button type="button" onclick="makeBusinessPlan()" style="width:100%;margin-top:22px;padding:15px;background:#d4af37;color:#080808;font-weight:bold;border:0;border-radius:8px;cursor:pointer;">
+      CREATE MY STARTER PLAN →
+    </button>
+
+    <div id="bizResult" aria-live="polite" style="display:none;margin-top:24px;padding:18px;background:#080808;border:1px solid #66501f;border-radius:10px;">
+    </div>
+
+    <p style="font-size:12px;color:#999;margin-top:18px;">
+      This guide provides general ideas, not guaranteed earnings. Budget estimates are illustrative; check actual costs and local requirements before spending.
+    </p>
+
+  </div>
+</section>
+
+<script>
+function makeBusinessPlan() {
+  const type = document.getElementById('bizType').value;
+  const budgetInput = document.getElementById('bizBudget');
+  const result = document.getElementById('bizResult');
+  const budget = Number(budgetInput.value);
+
+  if (budgetInput.value.trim() === '' ||
+      !Number.isFinite(budget) || budget < 0) {
+    result.style.display = 'block';
+    result.innerHTML =
+      '<p style="color:#f5dc86;">Please enter a valid budget of zero rand or more.</p>';
+    return;
+  }
+
+  const plans = {
+    reselling: {
+      title: 'Reselling products',
+      steps: [
+        'Research products people nearby want to buy.',
+        'Compare supplier prices and delivery costs.',
+        'Start by testing demand before buying stock.',
+        'Track every cost and sale.'
+      ],
+      tip: 'Consider taking genuine customer orders before investing in stock.'
+    },
+    online: {
+      title: 'Online services',
+      steps: [
+        'Choose one skill, such as flyer design or video editing.',
+        'Create two or three sample projects.',
+        'Show your work to potential customers.',
+        'Agree on the price and delivery time before starting.'
+      ],
+      tip: 'If you already have a phone and internet access, you may be able to start with very little extra spending.'
+    },
+    food: {
+      title: 'Food and drinks',
+      steps: [
+        'Choose one product to test.',
+        'Calculate ingredient, packaging and transport costs.',
+        'Check demand and local food-safety requirements.',
+        'Prepare small quantities and record sales.'
+      ],
+      tip: 'Check applicable permits and food-handling requirements before selling.'
+    },
+    services: {
+      title: 'Service business',
+      steps: [
+        'Choose a service you can perform safely.',
+        'List the equipment and transport you need.',
+        'Set a price that covers your costs and time.',
+        'Ask early customers for feedback and referrals.'
+      ],
+      tip: 'Starting with equipment you already own may reduce your upfront costs.'
+    }
+  };
+
+  const plan = plans[type];
+  const steps = plan.steps.map((step, index) =>
+    '<li style="margin:10px 0;color:#ddd;">' +
+    step + '</li>'
+  ).join('');
+
+  result.innerHTML =
+    '<h3 style="color:#f5dc86;">Your starter plan: ' +
+    plan.title + '</h3>' +
+    '<p style="color:#d4af37;">Your budget: R' +
+    budget.toLocaleString('en-ZA') + '</p>' +
+    '<ol style="padding-left:22px;line-height:1.6;">' +
+    steps + '</ol>' +
+    '<p style="color:#f5dc86;font-weight:bold;">Mindset tip</p>' +
+    '<p style="color:#ccc;line-height:1.7;">' +
+    plan.tip + '</p>' +
+    '<p style="color:#999;font-size:13px;">' +
+    'This is a starting guide, not a promise of profit. Keep some money aside for unexpected costs.' +
+    '</p>';
+
+  result.style.display = 'block';
+}
+</script>
+
   </div>
 </section>
   </section>
