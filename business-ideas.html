@@ -589,5 +589,243 @@ renderResults();
   </script>
 </section>
 <!-- END MINDSET BUSINESS IDEAS LIBRARY -->
+
+<style>
+/* Mindset Premium Profit Estimator */
+#mindset-estimator {
+  background: #101010;
+  color: #fff;
+  border: 1px solid #d4af37;
+  border-radius: 18px;
+  padding: 20px;
+  margin: 25px auto;
+  max-width: 760px;
+  font-family: Arial, sans-serif;
+}
+#mindset-estimator h2,
+#mindset-estimator h3 {
+  color: #f2c94c;
+}
+#mindset-estimator .me-intro {
+  color: #ccc;
+  line-height: 1.6;
+}
+#mindset-estimator .me-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+#mindset-estimator label {
+  display: block;
+  color: #f2c94c;
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+#mindset-estimator input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px;
+  border-radius: 9px;
+  border: 1px solid #555;
+  background: #1d1d1d;
+  color: #fff;
+  font-size: 16px;
+}
+#mindset-estimator .me-field {
+  min-width: 0;
+}
+#mindset-estimator button {
+  background: #f2c94c;
+  color: #111;
+  font-weight: bold;
+  border: 0;
+  border-radius: 9px;
+  padding: 13px 18px;
+  margin-top: 16px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 16px;
+}
+#mindset-estimator .me-results {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+#mindset-estimator .me-card {
+  background: #1c1c1c;
+  border: 1px solid #393939;
+  border-radius: 12px;
+  padding: 14px;
+}
+#mindset-estimator .me-card small {
+  color: #bbb;
+  display: block;
+  margin-bottom: 7px;
+}
+#mindset-estimator .me-value {
+  color: #f2c94c;
+  font-size: 21px;
+  font-weight: bold;
+  overflow-wrap: anywhere;
+}
+#mindset-estimator .me-note {
+  font-size: 13px;
+  color: #bbb;
+  line-height: 1.5;
+  margin-top: 14px;
+}
+@media (max-width: 480px) {
+  #mindset-estimator .me-grid,
+  #mindset-estimator .me-results {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+<section id="mindset-estimator">
+  <h2>💰 Premium Business Profit Estimator</h2>
+  <p class="me-intro">
+    Test your business idea before spending money. Enter your estimated
+    costs and sales to see your possible profit in South African rand.
+  </p>
+
+  <div class="me-grid">
+    <div class="me-field">
+      <label for="me-budget">Available startup budget (R)</label>
+      <input id="me-budget" type="number" min="0" step="0.01" value="1000">
+    </div>
+    <div class="me-field">
+      <label for="me-cost">Cost per item or service (R)</label>
+      <input id="me-cost" type="number" min="0" step="0.01" value="30">
+    </div>
+    <div class="me-field">
+      <label for="me-price">Selling price per item (R)</label>
+      <input id="me-price" type="number" min="0" step="0.01" value="50">
+    </div>
+    <div class="me-field">
+      <label for="me-sales">Expected sales per month (items)</label>
+      <input id="me-sales" type="number" min="0" step="1" value="40">
+    </div>
+    <div class="me-field">
+      <label for="me-expenses">Other monthly expenses (R)</label>
+      <input id="me-expenses" type="number" min="0" step="0.01" value="200">
+    </div>
+  </div>
+
+  <button type="button" id="me-calculate">Calculate My Profit 🚀</button>
+
+  <div class="me-results" aria-live="polite">
+    <div class="me-card">
+      <small>Estimated monthly revenue</small>
+      <div class="me-value" id="me-revenue">R0.00</div>
+    </div>
+    <div class="me-card">
+      <small>Estimated total costs</small>
+      <div class="me-value" id="me-total-costs">R0.00</div>
+    </div>
+    <div class="me-card">
+      <small>Estimated monthly profit</small>
+      <div class="me-value" id="me-profit">R0.00</div>
+    </div>
+    <div class="me-card">
+      <small>Profit margin</small>
+      <div class="me-value" id="me-margin">0%</div>
+    </div>
+    <div class="me-card">
+      <small>Money left after item costs and expenses</small>
+      <div class="me-value" id="me-cash">R0.00</div>
+    </div>
+    <div class="me-card">
+      <small>Estimated startup budget remaining</small>
+      <div class="me-value" id="me-budget-left">R0.00</div>
+    </div>
+  </div>
+
+  <p class="me-note" id="me-message">
+    Enter your estimates and calculate to see your results.
+  </p>
+  <p class="me-note">
+    Note: These are estimates, not guaranteed earnings. Include delivery,
+    packaging, fees, taxes and other relevant costs in your calculations.
+  </p>
+</section>
+
+<script>
+(function () {
+  const ids = [
+    "me-budget", "me-cost", "me-price", "me-sales", "me-expenses"
+  ];
+
+  function value(id) {
+    const el = document.getElementById(id);
+    return el ? Number(el.value) : 0;
+  }
+
+  function money(amount) {
+    return amount.toLocaleString("en-ZA", {
+      style: "currency",
+      currency: "ZAR",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+  }
+
+  function calculate() {
+    const budget = value("me-budget");
+    const cost = value("me-cost");
+    const price = value("me-price");
+    const sales = value("me-sales");
+    const expenses = value("me-expenses");
+
+    const invalid = ids.some(function (id) {
+      const el = document.getElementById(id);
+      return !el || el.value.trim() === "" ||
+        !Number.isFinite(Number(el.value)) || Number(el.value) < 0;
+    });
+
+    if (invalid) {
+      document.getElementById("me-message").textContent =
+        "Please enter valid, non-negative numbers in every field.";
+      return;
+    }
+
+    const revenue = price * sales;
+    const itemCosts = cost * sales;
+    const totalCosts = itemCosts + expenses;
+    const profit = revenue - totalCosts;
+    const margin = revenue > 0 ? (profit / revenue) * 100 : 0;
+    const budgetLeft = budget - (cost * sales);
+
+    document.getElementById("me-revenue").textContent = money(revenue);
+    document.getElementById("me-total-costs").textContent = money(totalCosts);
+    document.getElementById("me-profit").textContent = money(profit);
+    document.getElementById("me-margin").textContent = margin.toFixed(1) + "%";
+    document.getElementById("me-cash").textContent = money(profit);
+    document.getElementById("me-budget-left").textContent = money(budgetLeft);
+
+    let message = profit > 0
+      ? "Great! Your estimates show a possible monthly profit of " + money(profit) + "."
+      : profit < 0
+        ? "Your estimates show a possible monthly loss of " + money(Math.abs(profit)) + ". Review your price, costs or sales target."
+        : "Your estimates are at break-even: revenue equals total costs.";
+
+    if (budgetLeft < 0) {
+      message += " Warning: your startup budget may not cover the estimated item costs for these sales.";
+    } else {
+      message += " Check that your budget also covers any upfront expenses.";
+    }
+
+    document.getElementById("me-message").textContent = message;
+  }
+
+  document.getElementById("me-calculate").addEventListener("click", calculate);
+  ids.forEach(function (id) {
+    document.getElementById(id).addEventListener("input", calculate);
+  });
+  calculate();
+})();
+</script>
 </body>
 </html>
