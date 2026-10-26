@@ -1483,8 +1483,11 @@ updateSavings();
     $("ms-progress").value = percent;
 
     $("ms-next").textContent = next
-      ? "Next up: Week " + next + " — " + money(amount(next))
-      : "Amazing! You completed all 52 weeks! 🎉";
+  ? "Next up: Week " + next + " — " + money(amount(next))
+  : "Amazing! You completed all 52 weeks! 🎉";
+
+// Refresh achievements whenever savings change
+renderAchievements();
   }
 
   $("ms-update").addEventListener("click", function () {
@@ -1508,8 +1511,7 @@ updateSavings();
     save();
    render();
   }); 
-  // Display all 52 weeks when the page opens
-  renderAchievements();
+  // Display all 52 weeks when the page opensmm 
   render();
 })();
 </script>
