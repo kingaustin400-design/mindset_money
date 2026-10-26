@@ -1509,6 +1509,88 @@ updateSavings();
     render();
   });
 
+  
+  // Premium Savings Achievement System
+  const oldRender = render;
+
+  function render() {
+    oldRender();
+
+    let total = 0;
+    for (let i = 0; i < 52; i++) {
+      if (completed[i]) total += amount(i + 1);
+    }
+
+    const percent = Math.min(100, total / goal * 100);
+
+    const milestones = [
+      { pct: 0.10, name: "First Steps", icon: "🥉",
+        message: "Your savings journey has begun!" },
+      { pct: 0.25, name: "Money Builder", icon: "💰",
+        message: "You're building a saving habit!" },
+      { pct: 0.50, name: "Halfway Hero", icon: "🥈",
+        message: "You're halfway to your savings goal!" },
+      { pct: 0.75, name: "Wealth Warrior", icon: "🏆",
+        message: "You're getting closer to your goal!" },
+      { pct: 1.00, name: "Savings Champion", icon: "🥇",
+        message: "You reached your savings goal!" }
+    ];
+
+    let panel = document.getElementById("ms-achievements");
+
+    if (!panel) {
+      panel = document.createElement("div");
+      panel.id = "ms-achievements";
+      panel.className = "ms-card";
+      const heading = document.createElement("h3");
+      heading.style.color = "#e5bd55";
+      heading.textContent = "🏆 Your Achievements";
+      panel.appendChild(heading);
+
+      const host = document.getElementById("ms-weeks");
+      host.parentNode.insertBefore(panel, host);
+    }
+
+    panel.querySelectorAll(".ms-badge").forEach(el => el.remove());
+
+    const heading = panel.querySelector("h3");
+    const intro = document.createElement("p");
+    intro.className = "ms-muted";
+    intro.textContent =
+      "Unlock rewards as you reach your personal savings goal.";
+    heading.insertAdjacentElement("afterend", intro);
+
+    milestones.forEach(m => {
+      const unlocked = percent + 0.000001 >= m.pct * 100;
+      const badge = document.createElement("div");
+      badge.className = "ms-badge";
+      badge.style.cssText =
+        "display:flex;gap:12px;align-items:center;padding:12px;" +
+        "margin:8px 0;border-radius:10px;border:1px solid " +
+        (unlocked ? "#e5bd55" : "#383838") + ";" +
+        "background:" + (unlocked ? "#302713" : "#111") + ";";
+
+      const icon = document.createElement("span");
+      icon.style.fontSize = "28px";
+      icon.textContent = unlocked ? m.icon : "🔒";
+
+      const details = document.createElement("div");
+      const title = document.createElement("strong");
+      title.style.color = unlocked ? "#e5bd55" : "#aaa";
+      title.textContent = m.name;
+
+      const description = document.createElement("div");
+      description.className = "ms-muted";
+      description.textContent = unlocked
+        ? m.message
+        : "Save " + (m.pct * 100) + "% of your goal to unlock";
+
+      details.append(title, description);
+      badge.append(icon, details);
+      panel.appendChild(badge);
+    });
+  }
+
   render();
 })();
 </script>
