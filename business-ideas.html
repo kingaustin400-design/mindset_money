@@ -324,5 +324,270 @@ renderFavourites();
 renderResults();
 </script>
 </script>
+
+<!-- MINDSET SOUTH AFRICAN BUSINESS IDEAS LIBRARY -->
+<section id="za-business-library">
+  <style>
+    #za-business-library {
+      background:#090909;color:#f5f5f5;padding:24px 14px;
+      font-family:Arial,sans-serif;border-radius:18px;margin:24px auto;
+      max-width:1050px;box-sizing:border-box;
+    }
+    #za-business-library * {box-sizing:border-box}
+    #za-business-library h2,#za-business-library h3 {color:#f3c64e}
+    #za-business-library .za-sub {color:#c5c5c5;line-height:1.6}
+    #za-business-library input,#za-business-library select {
+      width:100%;padding:13px;margin:6px 0 14px;border-radius:9px;
+      border:1px solid #b88b20;background:#171717;color:white;
+      font-size:16px;
+    }
+    #za-business-library .za-grid {
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+      gap:14px;
+    }
+    #za-business-library .za-card {
+      border:1px solid #6e5418;border-radius:13px;padding:16px;
+      background:linear-gradient(145deg,#191919,#0e0e0e);
+    }
+    #za-business-library .za-tag {
+      color:#f3c64e;font-size:12px;font-weight:bold;
+      text-transform:uppercase;letter-spacing:.5px;
+    }
+    #za-business-library .za-card p {
+      color:#ddd;line-height:1.55;font-size:14px;
+    }
+    #za-business-library .za-card button {
+      width:100%;padding:11px;border:0;border-radius:8px;
+      background:#f3c64e;color:#111;font-weight:bold;cursor:pointer;
+      margin-top:8px;
+    }
+    #za-business-library .za-details {
+      display:none;border-top:1px solid #51421d;margin-top:12px;padding-top:8px;
+    }
+    #za-business-library .za-details.open {display:block}
+    #za-business-library .za-tip {
+      background:#211b0b;border:1px solid #8e6a1c;padding:16px;
+      border-radius:12px;margin:18px 0;line-height:1.6;
+    }
+    #za-business-library .za-note {font-size:12px;color:#aaa;line-height:1.5}
+  </style>
+
+  <h2>🇿🇦 Mindset Business Ideas Hub</h2>
+  <p class="za-sub">Realistic ideas to explore, starting small and building step by step. Choose an idea that matches your skills, budget and local demand.</p>
+
+  <div class="za-tip">
+    <strong style="color:#f3c64e">💡 The Mindset Money Tip</strong>
+    <p id="za-daily-tip">Start by finding a real customer need. Test your idea on a small scale before spending a lot of money.</p>
+    <button type="button" onclick="zaNextTip()" style="background:#f3c64e;border:0;padding:10px 14px;border-radius:8px;font-weight:bold">Next Money Tip →</button>
+  </div>
+
+  <label for="za-search">Search business ideas</label>
+  <input id="za-search" type="search" placeholder="e.g. online, cleaning, food..." oninput="zaRender()">
+
+  <label for="za-budget">Starting budget</label>
+  <select id="za-budget" onchange="zaRender()">
+    <option value="all">All budgets</option>
+    <option value="0">R0–R200</option>
+    <option value="200">R200–R1,000</option>
+    <option value="1000">R1,000–R5,000</option>
+    <option value="5000">R5,000+</option>
+  </select>
+
+  <label for="za-category">Business category</label>
+  <select id="za-category" onchange="zaRender()">
+    <option value="all">All categories</option>
+    <option value="Online">Online businesses</option>
+    <option value="Service">Local services</option>
+    <option value="Products">Selling products</option>
+    <option value="Food">Food and drinks</option>
+  </select>
+
+  <p id="za-count" class="za-sub"></p>
+  <div id="za-results" class="za-grid"></div>
+
+  <p class="za-note">Budget estimates are illustrative South African rand amounts, not supplier quotes. They exclude some possible transport, registration, equipment and permit costs. Check local rules and demand before starting.</p>
+
+  <script>
+    const zaIdeas = [
+      {
+        name:"Social Media Management",category:"Online",budget:0,
+        cost:"R0–R500",level:"Beginner",
+        desc:"Help local salons, barbers, spaza shops or small businesses post consistently.",
+        steps:"1. Create three sample posts. 2. Show them to nearby businesses. 3. Offer a clearly defined starter package. 4. Agree on payment and deliverables in writing.",
+        tip:"Use your phone and free design tools to make sample work before paying for premium software."
+      },
+      {
+        name:"Poster and Flyer Design",category:"Online",budget:0,
+        cost:"R0–R300",level:"Beginner",
+        desc:"Design promotional posters for events, churches, hair salons or local sellers.",
+        steps:"1. Make a small portfolio. 2. Share samples with potential customers. 3. Confirm the price and number of revisions. 4. Deliver files digitally.",
+        tip:"Ask for a deposit on larger jobs and agree on the deadline first."
+      },
+      {
+        name:"CV Formatting Service",category:"Online",budget:0,
+        cost:"R0–R300",level:"Beginner",
+        desc:"Help job seekers improve the layout and readability of their CVs.",
+        steps:"1. Create a sample CV template. 2. Advertise your service in appropriate community groups. 3. Confirm details with each client. 4. Protect their personal information.",
+        tip:"Never promise that a CV will guarantee employment."
+      },
+      {
+        name:"Tutoring",category:"Service",budget:0,
+        cost:"R0–R300",level:"Beginner",
+        desc:"Tutor learners in a subject you understand well, online or locally.",
+        steps:"1. Choose your subject and grade. 2. Prepare a sample lesson. 3. Reach parents through trusted local networks. 4. Set lesson times and fees.",
+        tip:"Start with one or two learners and request feedback before expanding."
+      },
+      {
+        name:"House Cleaning",category:"Service",budget:200,
+        cost:"R200–R1,000",level:"Beginner",
+        desc:"Offer once-off or recurring home cleaning services.",
+        steps:"1. List the tasks included. 2. Calculate cleaning supplies and travel. 3. Give a clear quote. 4. Build trust through reliable service.",
+        tip:"Price based on the job size, time, supplies and transport—not just what competitors charge."
+      },
+      {
+        name:"Car Washing",category:"Service",budget:200,
+        cost:"R200–R1,000",level:"Beginner",
+        desc:"Wash cars at an agreed location with permission and suitable water access.",
+        steps:"1. Check the location's rules. 2. Get basic cleaning supplies. 3. Offer a simple wash package. 4. Ask satisfied customers to refer others.",
+        tip:"Avoid wasting water and check local restrictions before operating."
+      },
+      {
+        name:"Gardening and Yard Cleanup",category:"Service",budget:200,
+        cost:"R200–R1,500",level:"Beginner",
+        desc:"Help households with weeding, sweeping, lawn care or garden cleanup.",
+        steps:"1. Start with jobs you can safely do. 2. Confirm whether the customer provides tools. 3. Quote labour and transport. 4. Take before-and-after photos with permission.",
+        tip:"Do not buy expensive equipment until you have enough demand."
+      },
+      {
+        name:"Clothing Reselling",category:"Products",budget:200,
+        cost:"R200–R2,000",level:"Beginner",
+        desc:"Resell carefully selected second-hand or affordable clothing.",
+        steps:"1. Research local demand. 2. Inspect quality and sizes. 3. Photograph items clearly. 4. Add all costs before setting your selling price.",
+        tip:"Test a small batch first instead of spending all your money on stock."
+      },
+      {
+        name:"Phone Accessories",category:"Products",budget:500,
+        cost:"R500–R3,000",level:"Beginner",
+        desc:"Sell popular charging cables, phone covers or screen protectors.",
+        steps:"1. Check which phone models are common among your customers. 2. Compare reliable suppliers. 3. Test product quality. 4. Keep records of sales and returns.",
+        tip:"Avoid counterfeit branded products and be honest about compatibility and quality."
+      },
+      {
+        name:"Snack Packs",category:"Food",budget:200,
+        cost:"R200–R1,000",level:"Beginner",
+        desc:"Prepare and sell packaged snack combinations where permitted.",
+        steps:"1. Ask potential customers what they want. 2. Calculate the cost per pack. 3. Use clean handling and suitable storage. 4. Check applicable food-selling requirements.",
+        tip:"Start with pre-orders so you can limit unsold stock."
+      },
+      {
+        name:"Cold Drinks Reselling",category:"Food",budget:200,
+        cost:"R200–R1,500",level:"Beginner",
+        desc:"Sell chilled drinks at an approved, suitable location.",
+        steps:"1. Check local demand and permission. 2. Compare wholesale prices. 3. Include ice, electricity and transport in your costs. 4. Track daily sales.",
+        tip:"A busy location does not guarantee profit—count every cost."
+      },
+      {
+        name:"Homemade Food Pre-orders",category:"Food",budget:500,
+        cost:"R500–R3,000",level:"Intermediate",
+        desc:"Make meals or baked goods to order for suitable local customers.",
+        steps:"1. Choose a small menu. 2. Calculate ingredients and packaging per portion. 3. Take orders before buying ingredients. 4. Check food safety and local permit requirements.",
+        tip:"Keep portions consistent and never ignore food safety rules."
+      },
+      {
+        name:"Laundry and Ironing",category:"Service",budget:200,
+        cost:"R200–R1,500",level:"Beginner",
+        desc:"Offer washing, folding or ironing based on equipment you already have.",
+        steps:"1. Define what each package includes. 2. Calculate water, electricity and detergent. 3. Label customers' items carefully. 4. Agree on collection and delivery.",
+        tip:"Start with a manageable number of orders so you don't mix up clothes."
+      },
+      {
+        name:"Digital Products",category:"Online",budget:0,
+        cost:"R0–R500",level:"Beginner",
+        desc:"Create original planners, budget sheets, templates or study resources to sell online.",
+        steps:"1. Solve one specific problem. 2. Create a useful original product. 3. Preview it clearly. 4. Choose a suitable payment and delivery method.",
+        tip:"Make something useful before spending money on advertising."
+      },
+      {
+        name:"Local Delivery or Errands",category:"Service",budget:200,
+        cost:"R200–R2,000",level:"Beginner",
+        desc:"Help nearby customers with agreed errands if you have safe, affordable transport.",
+        steps:"1. Set a small service area. 2. Quote the trip before accepting. 3. Confirm the item and delivery details. 4. Keep receipts and protect customer information.",
+        tip:"Calculate fuel or transport costs, time and safety before accepting a job."
+      },
+      {
+        name:"Pre-order Product Sales",category:"Products",budget:0,
+        cost:"R0–R500 to test",level:"Beginner",
+        desc:"Test demand for products by collecting genuine interest before buying stock.",
+        steps:"1. Find a reliable supplier. 2. Confirm the total cost and delivery time. 3. Explain the terms honestly. 4. Take orders only with clear, fair refund arrangements.",
+        tip:"Never claim you have stock when you do not, and do not promise delivery dates you cannot verify."
+      }
+    ];
+
+    const zaTips = [
+      "Start by finding a real customer need. Test your idea on a small scale before spending a lot of money.",
+      "Revenue is not profit. Subtract stock, transport, packaging, data, electricity and other business costs.",
+      "Ask potential customers what they need before buying stock. Interest is useful; paid orders are stronger evidence.",
+      "Keep business money separate from personal spending, even if you use a simple notebook or spreadsheet.",
+      "Write down every sale and expense. Small unrecorded costs can quietly erase your profit.",
+      "Use WhatsApp Status and community networks respectfully. Ask permission before adding people to promotional lists.",
+      "Compare suppliers, check product quality and keep proof of purchases.",
+      "Reinvest carefully. Keep some money available for restocking and unexpected costs.",
+      "Set a price that covers your costs and pays you for your time. A busy business can still lose money.",
+      "Avoid guaranteed-income promises and expensive courses that claim success is automatic."
+    ];
+    let zaTipIndex = 0;
+
+    function zaNextTip() {
+      zaTipIndex = (zaTipIndex + 1) % zaTips.length;
+      document.getElementById("za-daily-tip").textContent = zaTips[zaTipIndex];
+    }
+
+    function zaRender() {
+      const query = document.getElementById("za-search").value.toLowerCase().trim();
+      const budget = document.getElementById("za-budget").value;
+      const category = document.getElementById("za-category").value;
+      const filtered = zaIdeas.filter(idea => {
+        const matchesText = (idea.name + " " + idea.desc + " " + idea.category).toLowerCase().includes(query);
+        const matchesCategory = category === "all" || idea.category === category;
+        const matchesBudget = budget === "all" ||
+          (budget === "0" && idea.budget <= 200) ||
+          (budget === "200" && idea.budget >= 200 && idea.budget < 1000) ||
+          (budget === "1000" && idea.budget >= 1000 && idea.budget < 5000) ||
+          (budget === "5000" && idea.budget >= 5000);
+        return matchesText && matchesCategory && matchesBudget;
+      });
+
+      document.getElementById("za-count").textContent =
+        filtered.length + " business idea(s) found";
+
+      document.getElementById("za-results").innerHTML = filtered.map((idea, index) => `
+        <article class="za-card">
+          <span class="za-tag">${idea.category} · ${idea.level}</span>
+          <h3>${idea.name}</h3>
+          <p>${idea.desc}</p>
+          <p><strong>Estimated startup budget:</strong> ${idea.cost}</p>
+          <button type="button" onclick="zaToggle(${zaIdeas.indexOf(idea)})">See how to start</button>
+          <div class="za-details" id="za-detail-${zaIdeas.indexOf(idea)}">
+            <p><strong>First steps</strong><br>${idea.steps.replace(/\n/g,"<br>")}</p>
+            <p><strong>Mindset tip:</strong> ${idea.tip}</p>
+          </div>
+        </article>
+      `).join("");
+
+      if (!filtered.length) {
+        document.getElementById("za-results").innerHTML =
+          '<p class="za-sub">No matches. Try another search or choose a different budget.</p>';
+      }
+    }
+
+    function zaToggle(index) {
+      const panel = document.getElementById("za-detail-" + index);
+      if (panel) panel.classList.toggle("open");
+    }
+
+    zaRender();
+  </script>
+</section>
+<!-- END MINDSET BUSINESS IDEAS LIBRARY -->
 </body>
 </html>
