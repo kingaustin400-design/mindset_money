@@ -1193,5 +1193,324 @@ try {
 
 updateSavings();
 </script>
+
+<style>
+#mindset-savings {
+  --gold: #e5bd55;
+  background: #090909;
+  color: #f8f4e8;
+  border: 1px solid #b18a2d;
+  border-radius: 18px;
+  padding: 22px;
+  margin: 25px auto;
+  max-width: 850px;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+}
+#mindset-savings * { box-sizing: border-box; }
+#mindset-savings h2 {
+  color: var(--gold);
+  text-align: center;
+  font-size: 27px;
+}
+#mindset-savings .ms-sub {
+  color: #c6c0b0;
+  text-align: center;
+}
+#mindset-savings .ms-card {
+  background: #171717;
+  border: 1px solid #383020;
+  border-radius: 12px;
+  padding: 15px;
+  margin: 12px 0;
+}
+#mindset-savings .ms-stats {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 10px;
+}
+#mindset-savings .ms-number {
+  display: block;
+  color: var(--gold);
+  font-size: 23px;
+  font-weight: bold;
+  margin-top: 8px;
+  overflow-wrap: anywhere;
+}
+#mindset-savings input[type="number"] {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  background: #222;
+  color: white;
+  border: 1px solid #8f702d;
+  border-radius: 8px;
+  font-size: 16px;
+}
+#mindset-savings button {
+  background: var(--gold);
+  color: #111;
+  padding: 11px 15px;
+  border: 0;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+#mindset-savings .ms-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 15px 0;
+}
+#mindset-savings .ms-reset {
+  background: #292929;
+  color: white;
+  border: 1px solid #8f702d;
+}
+#mindset-savings progress {
+  width: 100%;
+  height: 17px;
+  accent-color: var(--gold);
+}
+#mindset-savings .ms-week {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #171717;
+  border: 1px solid #333;
+  padding: 13px;
+  border-radius: 9px;
+  margin: 8px 0;
+}
+#mindset-savings .ms-week input {
+  width: 21px;
+  height: 21px;
+  accent-color: var(--gold);
+  flex-shrink: 0;
+}
+#mindset-savings .ms-week span { flex: 1; }
+#mindset-savings .ms-week small {
+  display: block;
+  color: #bdb6a6;
+  margin-top: 4px;
+}
+#mindset-savings .ms-week strong {
+  color: var(--gold);
+  white-space: nowrap;
+}
+#mindset-savings .ms-muted {
+  color: #bbb3a2;
+  font-size: 13px;
+}
+@media(max-width:380px) {
+  #mindset-savings { padding: 13px; }
+  #mindset-savings .ms-number { font-size: 19px; }
+  #mindset-savings .ms-week { gap: 8px; }
+}
+</style>
+
+<section id="mindset-savings">
+  <h2>🤑 52-WEEK SAVINGS CHALLENGE</h2>
+  <p class="ms-sub">
+    Build better money habits, one week at a time.
+  </p>
+
+  <div class="ms-card">
+    <label for="ms-goal"><strong>Your savings goal (R)</strong></label>
+    <input id="ms-goal" type="number"
+      min="1" max="100000000" step="1" value="5000">
+    <div class="ms-actions">
+      <button id="ms-update" type="button">Update Goal</button>
+    </div>
+    <p class="ms-muted">
+      Your weekly amounts increase gradually to reach your goal
+      by week 52. You can change your goal anytime.
+    </p>
+  </div>
+
+  <div class="ms-stats">
+    <div class="ms-card">
+      Saved so far
+      <span class="ms-number" id="ms-saved">R0.00</span>
+    </div>
+    <div class="ms-card">
+      Savings goal
+      <span class="ms-number" id="ms-target">R5,000.00</span>
+    </div>
+    <div class="ms-card">
+      Still to save
+      <span class="ms-number" id="ms-left">R5,000.00</span>
+    </div>
+    <div class="ms-card">
+      Weeks completed
+      <span class="ms-number" id="ms-count">0 / 52</span>
+    </div>
+  </div>
+
+  <div class="ms-card">
+    <strong id="ms-percent">0% complete</strong>
+    <progress id="ms-progress" value="0" max="100"></progress>
+    <p id="ms-next" class="ms-muted">
+      Your first weekly target is waiting!
+    </p>
+  </div>
+
+  <h3 style="color:#e5bd55">Your weekly checklist</h3>
+  <p class="ms-muted">
+    Tick a week when you have actually saved its target amount.
+    Your progress is saved automatically on this device.
+  </p>
+
+  <div id="ms-weeks"></div>
+
+  <div class="ms-actions">
+    <button id="ms-reset" class="ms-reset" type="button">
+      Reset Challenge
+    </button>
+  </div>
+  <p class="ms-muted">
+    Note: Progress is stored in this browser on this device,
+    not in an online account.
+  </p>
+</section>
+
+<script>
+(function () {
+  const root = document.getElementById("mindset-savings");
+  if (!root || root.dataset.ready) return;
+  root.dataset.ready = "true";
+
+  const $ = id => document.getElementById(id);
+  const storageKey = "mindset52SavingsV1";
+  const money = n => "R" + n.toLocaleString("en-ZA", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
+
+  let goal = 5000;
+  let completed = Array(52).fill(false);
+
+  try {
+    const saved = JSON.parse(localStorage.getItem(storageKey));
+    if (saved && Number.isFinite(saved.goal) &&
+        saved.goal > 0 && saved.goal <= 100000000 &&
+        Array.isArray(saved.completed) &&
+        saved.completed.length === 52 &&
+        saved.completed.every(v => typeof v === "boolean")) {
+      goal = saved.goal;
+      completed = saved.completed;
+    }
+  } catch (e) {}
+
+  $("ms-goal").value = goal;
+
+  function save() {
+    try {
+      localStorage.setItem(storageKey, JSON.stringify({
+        goal, completed
+      }));
+    } catch (e) {}
+  }
+
+  function amount(week) {
+    // Weeks 1 to 52 add up to 1,378.
+    return goal * week / 1378;
+  }
+
+  function render() {
+    $("ms-target").textContent = money(goal);
+    $("ms-weeks").innerHTML = "";
+
+    let total = 0;
+    let count = 0;
+    let next = 0;
+
+    for (let i = 0; i < 52; i++) {
+      const week = i + 1;
+      const target = amount(week);
+
+      const label = document.createElement("label");
+      label.className = "ms-week";
+
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.checked = completed[i];
+      checkbox.setAttribute(
+        "aria-label", "Mark week " + week + " as completed"
+      );
+
+      const details = document.createElement("span");
+      const title = document.createElement("strong");
+      title.style.color = "#f8f4e8";
+      title.textContent = "Week " + week;
+
+      const subtitle = document.createElement("small");
+      subtitle.textContent = completed[i]
+        ? "Completed ✓"
+        : "Save this amount this week";
+
+      const value = document.createElement("strong");
+      value.textContent = money(target);
+
+      details.append(title, subtitle);
+      label.append(checkbox, details, value);
+      $("ms-weeks").appendChild(label);
+
+      if (completed[i]) {
+        total += target;
+        count++;
+      } else if (next === 0) {
+        next = week;
+      }
+
+      checkbox.addEventListener("change", function () {
+        completed[i] = checkbox.checked;
+        save();
+        render();
+      });
+    }
+
+    // Display the rounded savings total consistently.
+    total = Math.round(total * 100) / 100;
+    const left = Math.max(0, goal - total);
+    const percent = Math.min(100, total / goal * 100);
+
+    $("ms-saved").textContent = money(total);
+    $("ms-left").textContent = money(left);
+    $("ms-count").textContent = count + " / 52";
+    $("ms-percent").textContent =
+      percent.toFixed(1) + "% complete";
+    $("ms-progress").value = percent;
+
+    $("ms-next").textContent = next
+      ? "Next up: Week " + next + " — " + money(amount(next))
+      : "Amazing! You completed all 52 weeks! 🎉";
+  }
+
+  $("ms-update").addEventListener("click", function () {
+    const value = Number($("ms-goal").value);
+    if (!Number.isFinite(value) || value <= 0 ||
+        value > 100000000) {
+      alert("Enter a goal greater than R0 and no more than R100 million.");
+      $("ms-goal").value = goal;
+      return;
+    }
+    goal = value;
+    save();
+    render();
+  });
+
+  $("ms-reset").addEventListener("click", function () {
+    if (!confirm("Reset all 52 completed weeks? This cannot be undone.")) {
+      return;
+    }
+    completed = Array(52).fill(false);
+    save();
+    render();
+  });
+
+  render();
+})();
+</script>
 </body>
 </html>
