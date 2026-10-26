@@ -81,170 +81,248 @@ a{color:var(--gold)}
 <footer>🤑 Mindset — Think smart. Start small. Build consistently.</footer>
 
 <script>
+
+<script>
 const ideas = [
- {
-  name:"Social Media Assistant",
-  min:0,max:500,skills:["digital"],interest:"online",
-  cost:"R0–R500",model:"Service",
-  desc:"Help small businesses prepare posts, captions and simple promotional graphics.",
-  first:"Create three sample posts for a pretend business and show them to local businesses.",
-  risk:"You need a phone or computer, data and permission to use any client materials."
- },
- {
-  name:"Graphic Design Starter",
-  min:0,max:700,skills:["digital"],interest:"online",
-  cost:"R0–R700",model:"Digital service",
-  desc:"Design simple flyers, invitations, menus and social media graphics.",
-  first:"Make three sample designs and offer a small, clearly defined starter package.",
-  risk:"Free tools may be enough to start, but data, equipment and revisions take time."
- },
- {
-  name:"Cleaning Service",
-  min:200,max:1500,skills:["practical"],interest:"services",
-  cost:"R200–R1,500",model:"Local service",
-  desc:"Offer agreed cleaning services for homes, rooms or small offices.",
-  first:"List your services, check supply costs and ask potential customers what they need.",
-  risk:"Transport, cleaning supplies, safety and liability can add costs."
- },
- {
-  name:"Car Washing",
-  min:250,max:1500,skills:["practical"],interest:"services",
-  cost:"R250–R1,500",model:"Local service",
-  desc:"Wash cars for customers at an appropriate location with permission.",
-  first:"Price water, soap, cloths and transport, then test demand with a few customers.",
-  risk:"Check water restrictions, site permission and the cost of supplies."
- },
- {
-  name:"Clothing Reselling",
-  min:300,max:2500,skills:["selling"],interest:"products",
-  cost:"R300–R2,500",model:"Product sales",
-  desc:"Resell carefully selected second-hand or affordable clothing.",
-  first:"Research local selling prices and start with a very small batch or pre-orders.",
-  risk:"Unsold stock, delivery and returns can reduce your profit."
- },
- {
-  name:"Phone Accessories",
-  min:400,max:3000,skills:["selling"],interest:"products",
-  cost:"R400–R3,000",model:"Product sales",
-  desc:"Explore selling phone covers, screen protectors and other popular accessories.",
-  first:"Ask potential buyers which models they use and compare supplier prices before ordering.",
-  risk:"Wrong-model stock, product quality and competition can tie up your cash."
- },
- {
-  name:"Snack Reselling",
-  min:200,max:1500,skills:["selling","food"],interest:"food",
-  cost:"R200–R1,500",model:"Food sales",
-  desc:"Sell packaged snacks or drinks where selling is permitted.",
-  first:"Check demand, calculate the cost per item and choose a permitted selling location.",
-  risk:"Check local rules, expiry dates, storage and any venue permissions."
- },
- {
-  name:"Homemade Food Orders",
-  min:500,max:3000,skills:["food"],interest:"food",
-  cost:"R500–R3,000",model:"Food business",
-  desc:"Take small orders for a simple menu that you can prepare consistently.",
-  first:"Cost ingredients and packaging, test a small menu and calculate a price per portion.",
-  risk:"Food safety, permits, equipment and waste must be considered."
- },
- {
-  name:"Tutoring",
-  min:0,max:500,skills:["practical"],interest:"services",
-  cost:"R0–R500",model:"Education service",
-  desc:"Help learners practise a subject you understand well.",
-  first:"Choose one subject and level, prepare a sample lesson and share your offer with families.",
-  risk:"Be honest about your qualifications and arrange safe, suitable meeting places."
- },
- {
-  name:"Online Reselling by Order",
-  min:100,max:1000,skills:["selling"],interest:"online",
-  cost:"R100–R1,000",model:"Online sales",
-  desc:"Find genuine customer interest in a product before placing a small supplier order.",
-  first:"Verify the supplier, confirm stock and delivery times, and explain terms clearly to customers.",
-  risk:"Supplier scams, delays, refunds and customer trust are important risks."
- }
+ {name:"Social Media Assistant",min:0,max:500,skills:["digital"],interest:"online",cost:"R0–R500",model:"Service",desc:"Help small businesses prepare posts, captions and simple promotional graphics.",first:"Create three sample posts and show them to local businesses.",risk:"Data, equipment and time have costs."},
+ {name:"Graphic Design Starter",min:0,max:700,skills:["digital"],interest:"online",cost:"R0–R700",model:"Digital service",desc:"Design simple flyers, invitations, menus and social media graphics.",first:"Make three sample designs and offer a small starter package.",risk:"Account for data, equipment and revisions."},
+ {name:"Cleaning Service",min:200,max:1500,skills:["practical"],interest:"services",cost:"R200–R1,500",model:"Local service",desc:"Offer agreed cleaning services for homes or small offices.",first:"Check supply costs and ask potential customers what they need.",risk:"Transport, supplies and safety matter."},
+ {name:"Car Washing",min:250,max:1500,skills:["practical"],interest:"services",cost:"R250–R1,500",model:"Local service",desc:"Wash cars at a suitable location with permission.",first:"Price your supplies and check local demand.",risk:"Check water restrictions and site permission."},
+ {name:"Clothing Reselling",min:300,max:2500,skills:["selling"],interest:"products",cost:"R300–R2,500",model:"Product sales",desc:"Resell carefully selected second-hand or affordable clothing.",first:"Research prices and start with a small batch.",risk:"Unsold stock and delivery costs can reduce profit."},
+ {name:"Phone Accessories",min:400,max:3000,skills:["selling"],interest:"products",cost:"R400–R3,000",model:"Product sales",desc:"Explore selling phone covers, screen protectors and accessories.",first:"Ask buyers which models they use before ordering.",risk:"Wrong-model stock and quality issues can cost money."},
+ {name:"Snack Reselling",min:200,max:1500,skills:["selling","food"],interest:"food",cost:"R200–R1,500",model:"Food sales",desc:"Sell packaged snacks or drinks where permitted.",first:"Check demand and calculate the cost per item.",risk:"Check local rules, expiry dates and storage."},
+ {name:"Homemade Food Orders",min:500,max:3000,skills:["food"],interest:"food",cost:"R500–R3,000",model:"Food business",desc:"Take small orders for a simple menu you can prepare consistently.",first:"Cost ingredients and packaging for each portion.",risk:"Food safety, permits and equipment may add costs."},
+ {name:"Tutoring",min:0,max:500,skills:["practical"],interest:"services",cost:"R0–R500",model:"Education service",desc:"Help learners practise a subject you understand well.",first:"Prepare a sample lesson and share your offer with families.",risk:"Be honest about your qualifications and arrange safe meetings."},
+ {name:"Online Reselling by Order",min:100,max:1000,skills:["selling"],interest:"online",cost:"R100–R1,000",model:"Online sales",desc:"Test interest in a product before placing a small supplier order.",first:"Verify suppliers and explain delivery times clearly.",risk:"Supplier scams, delays and refunds can affect cash flow."}
 ];
 
-const money = n => "R" + n.toLocaleString("en-ZA",{maximumFractionDigits:2});
+const storageKey = "mindsetFavouriteBusinessIdeasV1";
+const results = document.getElementById("results");
+const output = document.getElementById("output");
+const generateButton = document.getElementById("generate");
 
-document.getElementById("generate").addEventListener("click", function(){
- const budgetInput = document.getElementById("budget");
- const budget = Number(budgetInput.value);
- const skill = document.getElementById("skill").value;
- const interest = document.getElementById("interest").value;
- const output = document.getElementById("output");
- const results = document.getElementById("results");
+let favourites = loadFavourites();
+let lastResults = [];
 
- if(budgetInput.value.trim()==="" || !Number.isFinite(budget) || budget<0){
-   alert("Please enter a valid budget of zero rand or more.");
-   budgetInput.focus();
-   return;
- }
+function loadFavourites() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(storageKey) || "[]");
+    return Array.isArray(saved)
+      ? saved.filter(x => x && typeof x.name === "string")
+      : [];
+  } catch (error) {
+    return [];
+  }
+}
 
- let matches = ideas.filter(item => {
-   const fitsBudget = item.min <= budget;
-   const fitsSkill = skill==="any" || item.skills.includes(skill);
-   const fitsInterest = interest==="any" || item.interest===interest;
-   return fitsBudget && fitsSkill && fitsInterest;
- });
+function saveFavourites() {
+  try {
+    localStorage.setItem(storageKey, JSON.stringify(favourites));
+    return true;
+  } catch (error) {
+    alert("Your browser could not save favourites. Check your browser storage settings.");
+    return false;
+  }
+}
 
- if(matches.length===0){
-   matches = ideas.filter(item => item.min<=budget);
- }
+function isFavourite(name) {
+  return favourites.some(item => item.name === name);
+}
 
- matches.sort((a,b) => a.min-b.min);
- const chosen = matches.slice(0,4);
+function makeElement(tag, className, text) {
+  const el = document.createElement(tag);
+  if (className) el.className = className;
+  if (text !== undefined) el.textContent = text;
+  return el;
+}
 
- results.replaceChildren();
+function makeActionButton(label, action, className) {
+  const btn = makeElement("button", className || "", label);
+  btn.type = "button";
+  btn.addEventListener("click", action);
+  return btn;
+}
 
- if(chosen.length===0){
-   const message=document.createElement("p");
-   message.textContent="There are no matching ideas in this starter list for your budget. Consider a lower-cost service, using equipment you already own, or building skills before investing.";
-   results.appendChild(message);
- } else {
-   chosen.forEach((item,index)=>{
-     const card=document.createElement("article");
-     card.className="result";
+/* Create the favourites section without editing other HTML */
+const favouriteSection = makeElement("section", "panel");
+favouriteSection.id = "saved-favourites";
+favouriteSection.appendChild(makeElement("h2", "", "⭐ My Favourite Ideas"));
 
-     const title=document.createElement("h3");
-     title.textContent=(index+1)+". "+item.name;
-     card.appendChild(title);
+const favouriteIntro = makeElement(
+  "p", "hint",
+  "Your saved ideas stay in this browser on this device."
+);
+favouriteSection.appendChild(favouriteIntro);
 
-     const tag=document.createElement("span");
-     tag.className="tag";
-     tag.textContent=item.model;
-     card.appendChild(tag);
+const favouriteList = makeElement("div");
+favouriteSection.appendChild(favouriteList);
 
-     const cost=document.createElement("p");
-     cost.innerHTML="<strong>Example startup range:</strong> ";
-     cost.appendChild(document.createTextNode(item.cost));
-     card.appendChild(cost);
+const clearButton = makeActionButton(
+  "Clear All Favourites", clearFavourites, "favourite-clear"
+);
+clearButton.style.background = "#292318";
+clearButton.style.color = "#f5c451";
+clearButton.style.border = "1px solid #59451d";
+favouriteSection.appendChild(clearButton);
 
-     const description=document.createElement("p");
-     description.textContent=item.desc;
-     card.appendChild(description);
+output.insertAdjacentElement("afterend", favouriteSection);
 
-     const first=document.createElement("p");
-     first.innerHTML="<strong>First step:</strong> ";
-     first.appendChild(document.createTextNode(item.first));
-     card.appendChild(first);
+function renderFavourites() {
+  favouriteList.replaceChildren();
 
-     const risk=document.createElement("p");
-     risk.innerHTML="<strong>Watch out for:</strong> ";
-     risk.appendChild(document.createTextNode(item.risk));
-     card.appendChild(risk);
+  if (favourites.length === 0) {
+    favouriteList.appendChild(makeElement(
+      "p", "hint", "No favourites saved yet. Generate ideas and tap ☆ Save Idea."
+    ));
+    clearButton.hidden = true;
+    return;
+  }
 
-     results.appendChild(card);
-   });
- }
+  clearButton.hidden = false;
 
- const note=document.createElement("p");
- note.className="hint";
- note.textContent="Ideas are selected using your budget and preferences where possible. Startup ranges are illustrative estimates, not supplier quotes. They exclude some possible costs and do not guarantee sales or profit.";
- results.appendChild(note);
+  favourites.forEach(item => {
+    const card = makeElement("article", "result");
+    card.appendChild(makeElement("h3", "", "⭐ " + item.name));
+    card.appendChild(makeElement("span", "tag", item.model || "Business idea"));
+    card.appendChild(makeElement("p", "", "Estimated startup range: " + (item.cost || "Check costs")));
+    card.appendChild(makeElement("p", "", item.desc || ""));
+    card.appendChild(makeElement("p", "", "First step: " + (item.first || "Research local demand.")));
 
- output.classList.remove("hidden");
- output.scrollIntoView({behavior:"smooth",block:"start"});
+    card.appendChild(makeActionButton("🗑 Remove Favourite", () => {
+      favourites = favourites.filter(f => f.name !== item.name);
+      if (saveFavourites()) {
+        renderFavourites();
+        renderResults();
+      }
+    }, "favourite-remove"));
+
+    favouriteList.appendChild(card);
+  });
+}
+
+function clearFavourites() {
+  if (favourites.length === 0) return;
+  if (!confirm("Remove all your saved business ideas?")) return;
+
+  const previous = favourites;
+  favourites = [];
+
+  if (saveFavourites()) {
+    renderFavourites();
+    renderResults();
+  } else {
+    favourites = previous;
+  }
+}
+
+function toggleFavourite(item) {
+  const wasSaved = isFavourite(item.name);
+
+  if (wasSaved) {
+    favourites = favourites.filter(f => f.name !== item.name);
+  } else {
+    favourites = [...favourites, {
+      name: item.name,
+      model: item.model,
+      cost: item.cost,
+      desc: item.desc,
+      first: item.first,
+      risk: item.risk
+    }];
+  }
+
+  if (saveFavourites()) {
+    renderFavourites();
+    renderResults();
+  } else {
+    favourites = loadFavourites();
+  }
+}
+
+function renderResults() {
+  results.replaceChildren();
+
+  if (lastResults.length === 0) {
+    results.appendChild(makeElement(
+      "p", "", "Choose your budget and preferences, then generate ideas."
+    ));
+    return;
+  }
+
+  lastResults.forEach((item, index) => {
+    const card = makeElement("article", "result");
+    card.appendChild(makeElement("h3", "", (index + 1) + ". " + item.name));
+    card.appendChild(makeElement("span", "tag", item.model));
+    card.appendChild(makeElement("p", "", "Estimated startup range: " + item.cost));
+    card.appendChild(makeElement("p", "", item.desc));
+    card.appendChild(makeElement("p", "", "First step: " + item.first));
+    card.appendChild(makeElement("p", "", "Watch out for: " + item.risk));
+
+    const saved = isFavourite(item.name);
+    card.appendChild(makeActionButton(
+      saved ? "★ Saved — Remove" : "☆ Save Idea",
+      () => toggleFavourite(item),
+      "favourite-save"
+    ));
+
+    results.appendChild(card);
+  });
+
+  results.appendChild(makeElement(
+    "p", "hint",
+    "Startup costs are illustrative estimates, not supplier quotes. Profit and sales are not guaranteed."
+  ));
+}
+
+generateButton.addEventListener("click", function() {
+  const budgetInput = document.getElementById("budget");
+  const budget = Number(budgetInput.value);
+  const skill = document.getElementById("skill").value;
+  const interest = document.getElementById("interest").value;
+
+  if (budgetInput.value.trim() === "" ||
+      !Number.isFinite(budget) || budget < 0) {
+    alert("Please enter a valid budget of zero rand or more.");
+    budgetInput.focus();
+    return;
+  }
+
+  let matches = ideas.filter(item =>
+    item.min <= budget &&
+    (skill === "any" || item.skills.includes(skill)) &&
+    (interest === "any" || item.interest === interest)
+  );
+
+  if (matches.length === 0) {
+    matches = ideas.filter(item => item.min <= budget);
+  }
+
+  lastResults = matches.slice(0, 4);
+  renderResults();
+  output.classList.remove("hidden");
+  output.scrollIntoView({behavior: "smooth", block: "start"});
 });
+
+/* Premium gold buttons */
+const extraStyle = document.createElement("style");
+extraStyle.textContent = `
+.favourite-save,.favourite-remove,.favourite-clear {
+  width:100%; margin-top:14px; padding:12px;
+  border-radius:10px; cursor:pointer; font-weight:bold;
+}
+.favourite-save {
+  background:#f5c451; color:#17120a; border:0;
+}
+.favourite-remove {
+  background:#292318; color:#f5c451; border:1px solid #59451d;
+}
+#saved-favourites { margin-top:20px; }
+`;
+document.head.appendChild(extraStyle);
+
+renderFavourites();
+renderResults();
+</script>
 </script>
 </body>
 </html>
