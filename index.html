@@ -1506,37 +1506,36 @@ updateSavings();
     }
     completed = Array(52).fill(false);
     save();
-    render();
+   renderAchievements();
+   render();
   }); 
   // Display all 52 weeks when the page opens.
   render();
 })();
 </script>
-
-  
+ 
   // Premium Savings Achievement System
-  const oldRender = render;
-
-  function render() {
-    oldRender();
-
+  function renderAchievements() {
     let total = 0;
+
     for (let i = 0; i < 52; i++) {
-      if (completed[i]) total += amount(i + 1);
+      if (completed[i]) {
+        total += amount(i + 1);
+      }
     }
 
-    const percent = Math.min(100, total / goal * 100);
+    const percent = goal > 0 ? (total / goal) * 100 : 0;
 
     const milestones = [
-      { pct: 0.10, name: "First Steps", icon: "🥉",
+      { pct: 10, name: "First Steps", icon: "🥉",
         message: "Your savings journey has begun!" },
-      { pct: 0.25, name: "Money Builder", icon: "💰",
+      { pct: 25, name: "Money Builder", icon: "💰",
         message: "You're building a saving habit!" },
-      { pct: 0.50, name: "Halfway Hero", icon: "🥈",
+      { pct: 50, name: "Halfway Hero", icon: "🥈",
         message: "You're halfway to your savings goal!" },
-      { pct: 0.75, name: "Wealth Warrior", icon: "🏆",
+      { pct: 75, name: "Wealth Warrior", icon: "🏆",
         message: "You're getting closer to your goal!" },
-      { pct: 1.00, name: "Savings Champion", icon: "🥇",
+      { pct: 100, name: "Savings Champion", icon: "🥇",
         message: "You reached your savings goal!" }
     ];
 
@@ -1546,26 +1545,30 @@ updateSavings();
       panel = document.createElement("div");
       panel.id = "ms-achievements";
       panel.className = "ms-card";
-      const heading = document.createElement("h3");
-      heading.style.color = "#e5bd55";
-      heading.textContent = "🏆 Your Achievements";
-      panel.appendChild(heading);
 
       const host = document.getElementById("ms-weeks");
+
+      if (!host || !host.parentNode) return;
+
       host.parentNode.insertBefore(panel, host);
     }
 
-    panel.querySelectorAll(".ms-badge").forEach(el => el.remove());
+    panel.replaceChildren();
 
-    const heading = panel.querySelector("h3");
+    const heading = document.createElement("h3");
+    heading.style.color = "#e5bd55";
+    heading.textContent = "🏆 Your Achievements";
+    panel.appendChild(heading);
+
     const intro = document.createElement("p");
     intro.className = "ms-muted";
     intro.textContent =
       "Unlock rewards as you reach your personal savings goal.";
-    heading.insertAdjacentElement("afterend", intro);
+    panel.appendChild(intro);
 
     milestones.forEach(m => {
-      const unlocked = percent + 0.000001 >= m.pct * 100;
+      const unlocked = percent + 0.000001 >= m.pct;
+
       const badge = document.createElement("div");
       badge.className = "ms-badge";
       badge.style.cssText =
@@ -1579,6 +1582,7 @@ updateSavings();
       icon.textContent = unlocked ? m.icon : "🔒";
 
       const details = document.createElement("div");
+
       const title = document.createElement("strong");
       title.style.color = unlocked ? "#e5bd55" : "#aaa";
       title.textContent = m.name;
@@ -1587,16 +1591,13 @@ updateSavings();
       description.className = "ms-muted";
       description.textContent = unlocked
         ? m.message
-        : "Save " + (m.pct * 100) + "% of your goal to unlock";
+        : "Save " + m.pct + "% of your goal to unlock";
 
       details.append(title, description);
       badge.append(icon, details);
       panel.appendChild(badge);
     });
   }
-
-  render();
-})();
 </script>
 </body>
 </html>
