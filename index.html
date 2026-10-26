@@ -1420,6 +1420,7 @@ updateSavings();
   function render() {
     $("ms-target").textContent = money(goal);
     $("ms-weeks").innerHTML = "";
+    renderAchievements();
 
     let total = 0;
     let count = 0;
@@ -1510,7 +1511,6 @@ updateSavings();
   }); 
   // Display all 52 weeks when the page opens
   render();
-  renderAchievements();
 })();
 </script>
  
